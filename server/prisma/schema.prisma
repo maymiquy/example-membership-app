@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int        @id @default(autoincrement())
+  name           String
+  email          String     @unique
+  password       String
+  membershipType Int        @default(1)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  membership     Membership @relation(fields: [membershipType], references: [id])
+}
+
+model Membership {
+  id         Int    @id @default(autoincrement())
+  type       Int    @unique
+  maxArticle Int
+  maxVideo   Int
+  User       User[]
+}
