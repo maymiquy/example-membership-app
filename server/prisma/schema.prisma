@@ -8,14 +8,14 @@ datasource db {
 }
 
 model User {
-  id             Int        @id @default(autoincrement())
+  id             Int         @id @default(autoincrement())
   name           String
-  email          String     @unique
+  email          String      @unique
   password       String
-  membershipType Int        @default(1)
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  membership     Membership @relation(fields: [membershipType], references: [id])
+  membershipType Int?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  membership     Membership? @relation(fields: [membershipType], references: [id])
 }
 
 model Membership {
