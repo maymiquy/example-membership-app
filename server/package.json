@@ -8,6 +8,9 @@
   "dev": "nodemon src/server.js",
   "test": "echo \"Error: no test specified\" && exit 1"
  },
+ "prisma": {
+  "seed": "node prisma/seeder/seed.js"
+ },
  "keywords": [],
  "author": "",
  "license": "ISC",
