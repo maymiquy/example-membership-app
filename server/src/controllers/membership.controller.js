@@ -1,5 +1,5 @@
 const membershipService = require('../services/membership.service');
-const authMiddleware = require('../middlewares/auth.middleware');
+const authGuard = require('../middlewares/authguard.middleware');
 
 const membershipController = {
     async getMemberships(req, res) {
@@ -13,7 +13,7 @@ const membershipController = {
 
     async subscribe(req, res) {
         try {
-            await authMiddleware(req, res, async () => {
+            await authGuard(req, res, async () => {
                 const { email } = req.user;
                 const { priceId } = req.body;
                 const data = await membershipService.successSubscribe(email, priceId);
@@ -22,7 +22,7 @@ const membershipController = {
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
-    },
+    }
 };
 
 module.exports = membershipController;
