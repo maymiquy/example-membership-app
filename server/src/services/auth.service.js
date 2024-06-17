@@ -3,6 +3,7 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const stripe = require('../config/stripe.config');
 
 
 const authService = {
@@ -15,7 +16,16 @@ const authService = {
 
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const newUser = await User.create(name, email, hashedPassword);
+            const stripeCust = await stripe.customers.create(
+                {
+                    email,
+                },
+                {
+                    apiKey: process.env.STRIPE_SECRET_KEY
+                }
+            );
+
+            const newUser = await User.create(name, email, hashedPassword, stripeCust.id);
             return newUser;
         } catch (error) {
             throw new Error(error.message);
@@ -34,9 +44,8 @@ const authService = {
                 throw new Error('Invalid email or password');
             }
 
-            const expire = 40 * 60 * 1000;
-            const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-                expiresIn: expire,
+            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
+                expiresIn: 360000,
             });
 
             return token;

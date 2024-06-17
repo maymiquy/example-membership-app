@@ -2,17 +2,6 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-    await prisma.membership.createMany({
-        data: [
-            { type: 'Standard', price: 9000 },
-            { type: 'Premium', price: 19000 },
-            { type: 'Platinum', price: 29000 },
-        ],
-    });
-    const seederMembership = prisma.membership.findMany();
-    (seederMembership.lenth > 0) && console.log('Membership seeded successfully');
-
-
     const articles = [
         ...Array.from({ length: 15 }, (_, i) => ({
             title: `Article ${i + 1}`,
