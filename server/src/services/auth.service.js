@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const stripe = require('../config/stripe.config');
+const { OAuth2Client } = require('google-auth-library');
 
 
 const authService = {
@@ -49,6 +50,48 @@ const authService = {
             });
 
             return token;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+
+    async googleOAuth(tokenId) {
+        const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        try {
+            const ticket = await googleClient.verifyIdToken({
+                idToken: tokenId,
+                audience: process.env.GOOGLE_CLIENT_ID,
+            });
+            const { name, email } = ticket.getPayload();
+
+            let user = await User.findByEmail(email);
+
+            if (!user) {
+                const hashedPassword = await bcrypt.hash(email, 10);
+
+                const stripeCust = await stripe.customers.create(
+                    {
+                        email,
+                    },
+                    {
+                        apiKey: process.env.STRIPE_SECRET_KEY
+                    }
+                );
+
+                user = await User.create(name, email, hashedPassword, stripeCust.id);
+
+                const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
+                    expiresIn: 360000,
+                });
+
+                return { user, token };
+            } else {
+                const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
+                    expiresIn: 360000,
+                });
+
+                return { user, token };
+            }
         } catch (error) {
             throw new Error(error.message);
         }

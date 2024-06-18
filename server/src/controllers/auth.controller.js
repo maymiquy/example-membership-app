@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
             maxAge: 40 * 60 * 1000,
         });
 
-        res.json({
+        res.status(200).json({
             message: 'Login successful',
             token: token
         });
@@ -51,8 +51,23 @@ exports.logout = async (req, res) => {
 
 exports.googleOAuth = async (req, res) => {
     try {
-        // Implement Google OAuth logic here
-        // ...
+        const { tokenId } = req.body;
+        const { user, token } = await authService.googleOAuth(tokenId);
+
+        res.cookie('authcookie', token, {
+            httpOnly: true,
+            secure: false,
+            maxAge: 40 * 60 * 1000,
+        });
+
+        res.status(200).json({
+            message: 'Google OAuth successful',
+            user: {
+                name: user.name,
+                email: user.email
+            },
+            token: token
+        });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

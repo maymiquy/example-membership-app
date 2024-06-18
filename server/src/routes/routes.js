@@ -51,6 +51,7 @@ router.post(
     }
 );
 router.post('/logout', authController.logout);
+router.post('/oauth/google', authController.googleOAuth);
 
 router.get('/users', userController.getAll);
 
