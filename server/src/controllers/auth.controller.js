@@ -75,8 +75,23 @@ exports.googleOAuth = async (req, res) => {
 
 exports.facebookOAuth = async (req, res) => {
     try {
-        // Implement Facebook OAuth logic here
-        // ...
+        const { accessToken } = req.body;
+        const { user, token } = await authService.facebookOAuth(accessToken);
+
+        res.cookie('authcookie', token, {
+            httpOnly: true,
+            secure: false,
+            maxAge: 40 * 60 * 1000,
+        });
+
+        res.status(200).json({
+            message: 'Facebook OAuth successful',
+            user: {
+                name: user.name,
+                email: user.email
+            },
+            token: token
+        });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

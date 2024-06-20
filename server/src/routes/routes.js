@@ -52,6 +52,7 @@ router.post(
 );
 router.post('/logout', authController.logout);
 router.post('/oauth/google', authController.googleOAuth);
+router.post('/oauth/fb', authController.facebookOAuth);
 
 router.get('/users', userController.getAll);
 
