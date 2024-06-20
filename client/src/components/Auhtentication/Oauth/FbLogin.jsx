@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 import axios from "axios";
 
-const FbLogin = () => {
+const FbLogin = (props) => {
+ const { appId, onSuccess, onFail, onProfileSuccess } = props;
  const [accessToken, setAccessToken] = useState(null);
  const [user, setUser] = useState(null);
 
@@ -40,21 +41,14 @@ const FbLogin = () => {
 
  return (
   <>
-   {user ? (
-    <div>
-     <p>Welcome, {user.name}! your successfully login with Facebook</p>
-     <p>Your email: {user.email}</p>
-    </div>
-   ) : (
-    <FacebookLogin
-     appId={import.meta.env.VITE_FACEBOOK_APP_ID}
-     onSuccess={handleFacebookLogin}
-     onFail={(error) => console.error("Login gagal:", error)}
-     onProfileSuccess={(profile) => console.log("Profil pengguna:", profile)}
-     useRedirect
-     disableRedirect={true}
-    />
-   )}
+   <FacebookLogin
+    appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+    onSuccess={handleFacebookLogin}
+    onFail={(error) => console.error("Login gagal:", error)}
+    onProfileSuccess={(profile) => console.log("Profil pengguna:", profile)}
+    useRedirect
+    disableRedirect={true}
+   />
   </>
  );
 };
