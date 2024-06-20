@@ -1,19 +1,12 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import FbLogin from "./components/FacebookLogin";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import WelcomePage from "./pages/WelcomePage";
 
 function App() {
- const [count, setCount] = useState(0);
-
  return (
-  <>
-   <h1>Vite + React</h1>
-   <div className="card">
-    <FbLogin />
-   </div>
-  </>
+  <Routes>
+   <Route path="/" element={<WelcomePage />} />
+  </Routes>
  );
 }
 
