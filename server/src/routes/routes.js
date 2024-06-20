@@ -55,6 +55,7 @@ router.post('/oauth/google', authController.googleOAuth);
 router.post('/oauth/fb', authController.facebookOAuth);
 
 router.get('/users', userController.getAll);
+router.get('/me', userController.getMe);
 
 router.get('/contents', contentController.getAllContents);
 router.get('/contents/article/:id', contentController.getArticleById);

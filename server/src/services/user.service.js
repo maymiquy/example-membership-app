@@ -8,6 +8,15 @@ const userService = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+
+    async findMe(email) {
+        try {
+            const user = await User.findByEmail(email);
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 };
 
