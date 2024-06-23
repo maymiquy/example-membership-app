@@ -1,54 +1,44 @@
-import React, { useState, useEffect } from "react";
+// FbLogin.jsx
+import React, { useState, useContext } from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 import axios from "axios";
+import { UserContext } from "../../../context/userContext";
 
-const FbLogin = (props) => {
- const { appId, onSuccess, onFail, onProfileSuccess } = props;
- const [accessToken, setAccessToken] = useState(null);
- const [user, setUser] = useState(null);
+const FbLogin = () => {
+ const { setUser } = useContext(UserContext);
+ const [hasLoggedIn, setHasLoggedIn] = useState(false);
 
- useEffect(() => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const accessToken = urlParams.get("access_token");
-  if (accessToken) {
-   setAccessToken(accessToken);
-   sendTokenToServer(accessToken);
-
-   window.history.replaceState({}, document.title, "/");
-  }
- }, []);
-
- const handleFacebookLogin = (response) => {
-  setAccessToken(response.accessToken);
-  sendTokenToServer(response.accessToken);
- };
-
- const sendTokenToServer = async (accessToken) => {
+ const handleFacebookLogin = async (response) => {
   try {
-   const res = await axios.post("http://localhost:5000/api/oauth/fb", {
+   const { accessToken } = response;
+   const { data } = await axios.post("http://localhost:5000/api/oauth/fb", {
     accessToken,
    });
-   const { user, token } = res.data;
-
-   setUser(user);
+   const { user, token } = data;
    localStorage.setItem("authToken", token);
-
-   console.log("Login berhasil:", user);
+   axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
+   setUser(user);
+   setHasLoggedIn(true);
+   window.location.reload();
   } catch (error) {
-   console.error("Login gagal:", error.message);
+   console.error("Facebook login failed:", error.message);
+   window.location.reload();
   }
  };
 
  return (
   <>
-   <FacebookLogin
-    appId={import.meta.env.VITE_FACEBOOK_APP_ID}
-    onSuccess={handleFacebookLogin}
-    onFail={(error) => console.error("Login gagal:", error)}
-    onProfileSuccess={(profile) => console.log("Profil pengguna:", profile)}
-    useRedirect
-    disableRedirect={true}
-   />
+   {!hasLoggedIn ? (
+    <FacebookLogin
+     appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+     onSuccess={handleFacebookLogin}
+     onFail={(error) => console.error("Login gagal:", error)}
+     useRedirect
+     redirectUri="http://localhost:5173/subscription"
+    />
+   ) : (
+    "Successfully logged in"
+   )}
   </>
  );
 };
