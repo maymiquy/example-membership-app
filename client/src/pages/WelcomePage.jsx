@@ -9,7 +9,7 @@ import LoginModal from "../components/Auhtentication/Modal/LoginModal";
 import RegisterModal from "../components/Auhtentication/Modal/RegisterModal";
 import FbLogin from "../components/Auhtentication/Oauth/FbLogin";
 import { GrGoogle } from "react-icons/gr";
-import { FaFacebook } from "react-icons/fa";
+import { SiFacebook } from "react-icons/si";
 
 const WelcomePage = () => {
  return (
@@ -57,13 +57,13 @@ const WelcomePage = () => {
       <div className="flex flex-col items-center justify-center space-y-4">
        <Button variant="outline" className="w-48" asChild>
         <Link>
-         <GrGoogle className="mr-2" />
+         <GrGoogle className="mr-2" size="18px" />
          Login with Google
         </Link>
        </Button>
        <Button variant="outline" className="w-48" asChild>
         <span>
-         <FaFacebook className="mr-2" />
+         <SiFacebook className="mr-2" size="18px" />
          <FbLogin />
         </span>
        </Button>

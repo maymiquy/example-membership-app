@@ -1,43 +1,40 @@
 // FbLogin.jsx
 import React, { useState, useContext } from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
-import axios from "axios";
 import { UserContext } from "../../../context/userContext";
+import { oauthFacebook, storeToken } from "../../../services/auth.service";
 
 const FbLogin = () => {
  const { setUser } = useContext(UserContext);
- const [hasLoggedIn, setHasLoggedIn] = useState(false);
+ const [isError, setIsError] = useState(false);
 
  const handleFacebookLogin = async (response) => {
   try {
    const { accessToken } = response;
-   const { data } = await axios.post("http://localhost:5000/api/oauth/fb", {
-    accessToken,
-   });
+   const { data } = await oauthFacebook(accessToken);
    const { user, token } = data;
    localStorage.setItem("authToken", token);
-   axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
+   if (token) storeToken(token);
    setUser(user);
-   setHasLoggedIn(true);
    window.location.reload();
   } catch (error) {
    console.error("Facebook login failed:", error.message);
    window.location.reload();
+   setIsError(true);
   }
  };
 
  return (
   <>
-   {!hasLoggedIn ? (
+   {!isError ? (
     <FacebookLogin
      appId={import.meta.env.VITE_FACEBOOK_APP_ID}
      onSuccess={handleFacebookLogin}
      onFail={(error) => console.error("Login gagal:", error)}
-     useRedirect
-     redirectUri="http://localhost:5173/subscription"
+     useRedirect={false}
     />
    ) : (
-    "Successfully logged in"
+    "Failed to login. Please try again."
    )}
   </>
  );

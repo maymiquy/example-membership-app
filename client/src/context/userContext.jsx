@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { fetchMe } from "../services/user.service";
+import { storeToken } from "../services/auth.service";
 
 export const UserContext = createContext(null);
 
@@ -12,36 +13,28 @@ export const UserProvider = ({ children }) => {
 
  const token = localStorage.getItem("authToken");
 
- if (token) {
-  axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
- }
+ if (token) storeToken(token);
 
- const fetchUser = async () => {
-  try {
-   const { data } = await axios.get("http://localhost:5000/api/me");
-   console.log("data :", data);
-   const user = data.data;
-   if (user) {
+ useEffect(() => {
+  (async () => {
+   try {
+    const user = await fetchMe();
     setUser(user);
     setLoading(false);
     setError(null);
-   } else if (data.errors && data.errors.length) {
+    if (token && user.membershipType === null) {
+     navigate("/subscription");
+    } else if (token && user.membershipType) {
+     navigate("/dashboard/contents");
+    }
+   } catch (error) {
     setUser(null);
     setLoading(false);
-    setError(data.errors[0].msg);
+    setError("Error fetching user: " + error.message);
    }
-  } catch (error) {
-   setUser(null);
-   setLoading(false);
-   setError("Error fetching user");
-  }
- };
+  })();
 
- useEffect(() => {
-  if (token) {
-   fetchUser();
-   navigate("/subscription");
-  } else {
+  if (!token) {
    setUser(null);
    setLoading(false);
    setError(null);

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 
-const SubscriptionPage = () => {
+const ContentsPage = () => {
  const { user, loading, error } = useContext(UserContext);
 
  console.log("user subs:", user);
@@ -16,7 +16,7 @@ const SubscriptionPage = () => {
 
  return (
   <div>
-   <h1>Subscription Page</h1>
+   <h1>Contents Page</h1>
    <p>User ID: {user.id}</p>
    <p>User Email: {user.email}</p>
    <p>Membership: {user.membershipType}</p>
@@ -25,4 +25,4 @@ const SubscriptionPage = () => {
  );
 };
 
-export default SubscriptionPage;
+export default ContentsPage;

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
  Dialog,
  DialogContent,
@@ -12,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { regularLogin, storeToken } from "../../../services/auth.service";
 
 const LoginModal = () => {
  const [email, setEmail] = useState("");
@@ -20,17 +20,14 @@ const LoginModal = () => {
 
  const handleLogin = async () => {
   try {
-   const response = await axios.post("http://localhost:5000/api/login", {
-    email,
-    password,
-   });
+   const response = await regularLogin(email, password);
 
    console.log(response.data);
 
    const { token } = response.data;
 
    localStorage.setItem("authToken", token);
-   axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
+   if (token) storeToken(token);
 
    window.location.reload();
   } catch (error) {
