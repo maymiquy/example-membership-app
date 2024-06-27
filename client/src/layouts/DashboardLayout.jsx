@@ -8,7 +8,6 @@ import { useLocation } from "react-router-dom";
 import getMenu from "../lib/menu";
 
 const DashboardLayout = (props) => {
- const { children } = props;
  const sidebar = useStore(useSidebarToggle, (state) => state);
  const [title, setTitle] = React.useState("");
  const pathname = useLocation().pathname;
@@ -30,8 +29,8 @@ const DashboardLayout = (props) => {
       sidebar?.isOpen === false ? "lg:ml-[90px]" : "lg:ml-72",
      )}
     >
-     <Navbar title={title} />
-     <div className="container pt-8 pb-8 px-4 sm:px-8">{children}</div>
+     <Navbar title={title} user={props.user} />
+     <div className="container pt-8 pb-8 px-4 sm:px-8">{props.children}</div>
     </main>
     <footer
      className={cn(

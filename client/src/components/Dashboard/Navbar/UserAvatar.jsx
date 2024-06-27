@@ -17,11 +17,14 @@ import {
 import { Button } from "../../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { LogOut, User } from "lucide-react";
-import { UserContext } from "../../../context/userContext";
 import { logout } from "../../../services/auth.service";
 
-const UserAvatar = () => {
- const { user } = useContext(UserContext);
+const UserAvatar = (props) => {
+ const userAvatar = `${props.user.name.charAt(0).toUpperCase()}${props.user.name
+  .split(" ")
+  [props.user.name.split(" ").length - 1].charAt(0)
+  .toUpperCase()}`;
+
  return (
   <>
    <DropdownMenu>
@@ -32,7 +35,9 @@ const UserAvatar = () => {
         <Button variant="outline" className="relative h-8 w-8 rounded-full">
          <Avatar className="h-8 w-8">
           <AvatarImage src="#" alt="Avatar" />
-          <AvatarFallback className="bg-transparent">JD</AvatarFallback>
+          <AvatarFallback className="bg-transparent">
+           {props.user.name ? userAvatar : "n/a"}
+          </AvatarFallback>
          </Avatar>
         </Button>
        </DropdownMenuTrigger>
@@ -51,19 +56,19 @@ const UserAvatar = () => {
      <DropdownMenuSeparator />
      <DropdownMenuGroup>
       <span className="relative flex flex-col space-y-2 px-2 py-1.5">
-       <p className="text-sm font-medium leading-none">{user.name}</p>
+       <p className="text-sm font-medium leading-none">{props.user.name}</p>
        <p className="text-xs leading-none text-muted-foreground">
-        {user.email}
+        {props.user.email}
        </p>
        <p className="text-xs truncate text-muted-foreground">
         <span className="font-semibold text-gray-800">Member</span>
         <span className="ml-1 mr-1 font bold">:</span>
-        {user.membershipType ? user.membershipType : "-"}
+        {props.user.membershipType ? props.user.membershipType : "-"}
        </p>
        <p className="text-xs truncate text-muted-foreground">
         <span className="font-semibold text-gray-800">Cust ID</span>
         <span className="ml-[11px] mr-1 font bold">:</span>
-        {user.stripId}
+        {props.user.stripId}
        </p>
       </span>
      </DropdownMenuGroup>
