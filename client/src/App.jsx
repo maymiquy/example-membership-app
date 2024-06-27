@@ -12,7 +12,10 @@ function App() {
   <Routes>
    <Route path="/" element={<WelcomePage />} />
    <Route element={<ProtectedRoute />}>
-    <Route path="/subscription" element={<SubscriptionPage />} />
+    <Route
+     path="/subscription"
+     element={<SubscriptionPage user={user} loading={loading} error={error} />}
+    />
     <Route
      path="/dashboard/contents"
      element={<ContentsPage user={user} loading={loading} error={error} />}
