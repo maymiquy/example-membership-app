@@ -31,4 +31,13 @@ const oauthFacebook = async (accessToken) => {
     }
 }
 
-export { storeToken, regularLogin, oauthFacebook, };
+const logout = async () => {
+    try {
+        const data = await axios.post("http://localhost:5000/api/logout");
+        return data;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+export { storeToken, regularLogin, oauthFacebook, logout };
