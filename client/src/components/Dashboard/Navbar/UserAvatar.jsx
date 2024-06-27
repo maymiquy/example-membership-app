@@ -56,13 +56,13 @@ const UserAvatar = () => {
         {user.email}
        </p>
        <p className="text-xs truncate text-muted-foreground">
-        <span className="font-semibold text-gray-800">Type</span>
-        <span className="ml-[18px] mr-1 font bold">:</span>
-        {user.membershipType}
+        <span className="font-semibold text-gray-800">Member</span>
+        <span className="ml-1 mr-1 font bold">:</span>
+        {user.membershipType ? user.membershipType : "-"}
        </p>
        <p className="text-xs truncate text-muted-foreground">
         <span className="font-semibold text-gray-800">Cust ID</span>
-        <span className="ml-1 mr-1 font bold">:</span>
+        <span className="ml-[11px] mr-1 font bold">:</span>
         {user.stripId}
        </p>
       </span>
