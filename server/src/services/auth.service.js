@@ -118,7 +118,7 @@ const authService = {
                     }
                 );
 
-                user = await User.create(name, email, hashedPassword, stripeCust.id);
+                const user = await User.create(name, email, hashedPassword, stripeCust.id);
 
                 const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
                     expiresIn: 360000,
