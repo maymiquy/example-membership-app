@@ -6,10 +6,10 @@ const stripe = require('../config/stripe.config');
 const membershipService = {
     async membershipPricing() {
         try {
-            const memberships = await stripe.prices.list({
+            const { data } = await stripe.prices.list({
                 apiKey: process.env.STRIPE_SECRET_KEY,
             });
-            return memberships;
+            return data;
         } catch (error) {
             throw new Error(error.message);
         }
@@ -27,28 +27,18 @@ const membershipService = {
                     },
                 ],
                 mode: 'subscription',
-                success_url: `${process.env.APP_URL_SERVER}/contents`,
-                cancel_url: `${process.env.APP_URL_SERVER}/plans`,
+                success_url: `${process.env.APP_URL_SERVER}/api/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: `${process.env.APP_URL_CLIENT}/subscription`,
                 customer: user.stripId,
             }, {
                 apiKey: process.env.STRIPE_SECRET_KEY,
             });
 
-            if (session.payment_status === 'unpaid') {
-                if (session.amount_total === 900000) {
-                    await User.updateMembershipType(email, 'Basic');
-                } else if (session.amount_total === 1900000) {
-                    await User.updateMembershipType(email, 'Premium');
-                } else if (session.amount_total === 2900000) {
-                    await User.updateMembershipType(email, 'Platinum');
-                }
-            }
-
             return session;
         } catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
 };
 
 module.exports = membershipService;

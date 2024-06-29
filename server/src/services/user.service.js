@@ -17,7 +17,17 @@ const userService = {
         } catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
+
+    async updateUserMembership(email, membershipType) {
+        try {
+            const user = await User.updateMembershipType(email, membershipType);
+
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };
 
 module.exports = userService;

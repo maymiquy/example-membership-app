@@ -61,7 +61,8 @@ router.get('/contents', contentController.getAllContents);
 router.get('/contents/article/:id', contentController.getArticleById);
 router.get('/contents/video/:id', contentController.getVideoById);
 
-router.get('/memberships', membershipController.getMemberships);
+router.get('/pricing', membershipController.getMemberships);
 router.post('/subscribe', membershipController.subscribe);
+router.get('/checkout/success', membershipController.checkoutSuccess);
 
 module.exports = router;

@@ -1,5 +1,9 @@
+require('dotenv').config();
+
 const membershipService = require('../services/membership.service');
 const authGuard = require('../middlewares/authguard.middleware');
+const userService = require('../services/user.service');
+const stripe = require('../config/stripe.config');
 
 const membershipController = {
     async getMemberships(req, res) {
@@ -21,6 +25,30 @@ const membershipController = {
             });
         } catch (error) {
             res.status(400).json({ message: error.message });
+        }
+    },
+
+    async checkoutSuccess(req, res) {
+        try {
+            const { session_id } = req.query;
+            const session = await stripe.checkout.sessions.retrieve(session_id);
+            const { email } = session.customer_details;
+
+            if (session.payment_status === 'paid') {
+                if (session.amount_total === 900000) {
+                    await userService.updateUserMembership(email, 'Basic');
+                } else if (session.amount_total === 1900000) {
+                    await userService.updateUserMembership(email, 'Premium');
+                } else if (session.amount_total === 2900000) {
+                    await userService.updateUserMembership(email, 'Platinum');
+                }
+
+                res.redirect(`${process.env.APP_URL_CLIENT}/contents`);
+            } else {
+                res.status(400).json({ message: 'Payment failed.' });
+            }
+        } catch (error) {
+            res.status(500).json({ message: error.message });
         }
     }
 };
