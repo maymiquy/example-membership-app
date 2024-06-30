@@ -9,6 +9,9 @@ module.exports = {
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      'sans': ['IBM Plex Mono', 'monospace'],
+    },
     container: {
       center: true,
       padding: "2rem",
