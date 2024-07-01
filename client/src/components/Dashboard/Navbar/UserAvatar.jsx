@@ -68,7 +68,7 @@ const UserAvatar = (props) => {
        <p className="text-xs truncate text-muted-foreground">
         <span className="font-semibold text-gray-800">Cust ID</span>
         <span className="ml-[11px] mr-1 font bold">:</span>
-        {props.user.stripId}
+        {props.user.stripeId}
        </p>
       </span>
      </DropdownMenuGroup>

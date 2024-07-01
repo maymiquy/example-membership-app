@@ -1,7 +1,7 @@
 import React from "react";
 import UserAvatar from "./UserAvatar";
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { Banana } from "lucide-react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 

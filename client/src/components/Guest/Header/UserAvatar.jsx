@@ -7,17 +7,17 @@ import {
  DropdownMenuLabel,
  DropdownMenuSeparator,
  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../../ui/dropdown-menu";
 import {
  Tooltip,
  TooltipContent,
  TooltipProvider,
  TooltipTrigger,
-} from "../ui/tooltip";
-import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+} from "../../ui/tooltip";
+import { Button } from "../../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { LogOut, User } from "lucide-react";
-import { logout } from "../../services/auth.service";
+import { logout } from "../../../services/auth.service";
 
 const UserAvatar = (props) => {
  const userAvatar = `${props.user.name.charAt(0).toUpperCase()}${props.user.name
@@ -68,7 +68,7 @@ const UserAvatar = (props) => {
        <p className="text-xs truncate text-muted-foreground">
         <span className="font-semibold text-gray-800">Cust ID</span>
         <span className="ml-[11px] mr-1 font bold">:</span>
-        {props.user.stripId}
+        {props.user.stripeId}
        </p>
       </span>
      </DropdownMenuGroup>
