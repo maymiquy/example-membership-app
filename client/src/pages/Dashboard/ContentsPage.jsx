@@ -23,7 +23,7 @@ const ContentsPage = (props) => {
         <p>User ID: {props.user.id}</p>
         <p>User Email: {props.user.email}</p>
         <p>Membership: {props.user.membershipType}</p>
-        <p>Stripe Customer ID: {props.user.stripId}</p>
+        <p>Stripe Customer ID: {props.user.stripeId}</p>
        </div>
       </div>
      </div>

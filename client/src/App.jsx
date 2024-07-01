@@ -10,14 +10,14 @@ function App() {
  const { user, loading, error } = useContext(UserContext);
  return (
   <Routes>
-   <Route path="/" element={<WelcomePage />} />
+   <Route path="/" element={<WelcomePage user={user} />} />
    <Route element={<ProtectedRoute />}>
-    <Route
+    {/* <Route
      path="/subscription"
      element={<SubscriptionPage user={user} loading={loading} error={error} />}
-    />
+    /> */}
     <Route
-     path="/dashboard/contents"
+     path="/contents"
      element={<ContentsPage user={user} loading={loading} error={error} />}
     />
    </Route>
