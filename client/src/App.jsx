@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
-import SubscriptionPage from "./pages/Subscription/SubscriptionPage";
 import ProtectedRoute from "./ProtectedRoutes";
 import ContentsPage from "./pages/Dashboard/ContentsPage";
 import { UserContext } from "./context/userContext";
@@ -12,10 +11,6 @@ function App() {
   <Routes>
    <Route path="/" element={<WelcomePage user={user} />} />
    <Route element={<ProtectedRoute />}>
-    {/* <Route
-     path="/subscription"
-     element={<SubscriptionPage user={user} loading={loading} error={error} />}
-    /> */}
     <Route
      path="/contents"
      element={<ContentsPage user={user} loading={loading} error={error} />}
