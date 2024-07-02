@@ -12,15 +12,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { regularLogin, storeToken } from "../../../services/auth.service";
+import { useToast } from "../../ui/use-toast";
 
 const LoginModal = () => {
- const [email, setEmail] = useState("");
- const [password, setPassword] = useState("");
- const [errorMessage, setErrorMessage] = useState("");
+ const [formLogin, setFormLogin] = useState({
+  email: "",
+  password: "",
+ });
+ const [error, setError] = useState({
+  email: "",
+  password: "",
+ });
+ const [isOpen, setIsOpen] = useState(false);
+ const { toast } = useToast();
 
  const handleLogin = async () => {
   try {
-   const response = await regularLogin(email, password);
+   const response = await regularLogin(formLogin.email, formLogin.password);
 
    console.log(response.data);
 
@@ -29,15 +37,64 @@ const LoginModal = () => {
    localStorage.setItem("authToken", token);
    if (token) storeToken(token);
 
-   window.location.reload();
+   setIsOpen(false);
+
+   toast({
+    title: "Login Successful",
+   });
+
+   setTimeout(() => {
+    window.location.reload();
+   }, 1500);
+
+   setFormLogin({
+    email: "",
+    password: "",
+   });
+   setError({
+    email: "",
+    password: "",
+   });
   } catch (error) {
-   console.error("Login failed:", error.message);
-   setErrorMessage("Invalid credentials");
+   console.error("Login failed:", error);
+
+   setIsOpen(true);
+   const messageError = error.response.data;
+
+   toast({
+    title: "Login Failed",
+    description: messageError.error || messageError.errors[0].msg,
+    variant: "destructive",
+   });
+
+   if (formLogin.password.length < 6)
+    setError({
+     email: "",
+     password: messageError.errors[0].msg,
+    });
+
+   if (!/\S+@\S+\.\S+/.test(formLogin.email))
+    setError({
+     email: messageError.errors[0].msg,
+     password: "",
+    });
   }
  };
 
+ const handleInputChange = async (e) => {
+  setFormLogin({
+   ...formLogin,
+   [e.target.id]: e.target.value,
+  });
+
+  setError({
+   ...error,
+   [e.target.id]: "",
+  });
+ };
+
  return (
-  <Dialog>
+  <Dialog open={isOpen} onOpenChange={setIsOpen}>
    <DialogTrigger asChild>
     <Button variant="default">Login</Button>
    </DialogTrigger>
@@ -55,11 +112,11 @@ const LoginModal = () => {
        id="email"
        type="email"
        placeholder="name@example.com"
-       value={email}
-       onChange={(e) => setEmail(e.target.value)}
+       value={formLogin.email}
+       onChange={handleInputChange}
       />
-      {errorMessage && (
-       <p className="text-red-500 text-xs truncate">{errorMessage}</p>
+      {error.email && (
+       <p className="text-red-500 text-xs truncate">{error.email}</p>
       )}
      </div>
      <div className="grid gap-2">
@@ -68,11 +125,11 @@ const LoginModal = () => {
        id="password"
        type="password"
        placeholder="*******"
-       value={password}
-       onChange={(e) => setPassword(e.target.value)}
+       value={formLogin.password}
+       onChange={handleInputChange}
       />
-      {errorMessage && (
-       <p className="text-red-500 text-xs truncate">{errorMessage}</p>
+      {error.password && (
+       <p className="text-red-500 text-xs truncate">{error.password}</p>
       )}
      </div>
      <Button variant="default" onClick={handleLogin}>

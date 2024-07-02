@@ -9,9 +9,8 @@ const router = express.Router();
 
 router.post('/register',
     [
-        body('name').isString().isLength({ min: 3 }),
-        body('email').isEmail(),
-        body('password').isString().isLength({ min: 6 })
+        body('email').isEmail().withMessage('Email must be a valid email address'),
+        body('password').isString().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -31,10 +30,12 @@ router.post(
     [
         body('email')
             .isEmail()
-            .withMessage('Invalid email address')
+            .withMessage('Email must be a valid email address')
             .notEmpty()
             .withMessage('Email is required'),
         body('password')
+            .isLength({ min: 6 })
+            .withMessage('Password must be at least 6 characters long')
             .notEmpty()
             .withMessage('Password is required')
     ],
