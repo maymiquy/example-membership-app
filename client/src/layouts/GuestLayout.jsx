@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Guest/Header/Navbar";
+import { Toaster } from "../components/ui/toaster";
 
 const GuestLayout = (props) => {
  return (
@@ -10,6 +11,7 @@ const GuestLayout = (props) => {
      <section className="mx-auto flex max-w-[980px] flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-14 lg:pb-6">
       {props.children}
      </section>
+     <Toaster />
     </div>
    </main>
   </div>

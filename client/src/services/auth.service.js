@@ -9,15 +9,22 @@ const storeToken = async (token) => {
 };
 
 const regularLogin = async (email, password) => {
-    try {
-        const data = await axios.post("http://localhost:5000/api/login", {
-            email,
-            password,
-        });
-        return data;
-    } catch (error) {
-        throw new Error(error.message);
-    }
+    const data = await axios.post("http://localhost:5000/api/login", {
+        email,
+        password,
+    });
+
+    return data;
+}
+
+const regularRegister = async (name, email, password) => {
+    const data = await axios.post("http://localhost:5000/api/register", {
+        name,
+        email,
+        password,
+    })
+
+    return data;
 }
 
 const oauthFacebook = async (accessToken) => {
@@ -40,4 +47,4 @@ const logout = async () => {
     }
 }
 
-export { storeToken, regularLogin, oauthFacebook, logout };
+export { storeToken, regularLogin, regularRegister, oauthFacebook, logout };

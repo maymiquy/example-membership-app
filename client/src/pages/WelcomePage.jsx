@@ -48,7 +48,7 @@ const WelcomePage = (props) => {
 
  return (
   <GuestLayout user={props.user}>
-   <Heading />
+   <Heading user={props.user} />
    {!props.user ? (
     loading ? (
      <Spinner size="large" />
