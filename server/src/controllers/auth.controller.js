@@ -51,12 +51,12 @@ exports.logout = async (req, res) => {
 
 exports.googleOAuth = async (req, res) => {
     try {
-        const { tokenId } = req.body;
-        const { user, token } = await authService.googleOAuth(tokenId);
+        const { accessToken } = req.body;
+        const { user, token } = await authService.googleOAuth(accessToken);
 
         res.cookie('authcookie', token, {
             httpOnly: true,
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
             maxAge: 40 * 60 * 1000,
         });
 

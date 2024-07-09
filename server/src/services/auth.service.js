@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const stripe = require('../config/stripe.config');
-const { OAuth2Client } = require('google-auth-library');
 const axios = require('axios');
 
 
@@ -56,14 +55,20 @@ const authService = {
         }
     },
 
-    async googleOAuth(tokenId) {
-        const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    async googleOAuth(accessToken) {
         try {
-            const ticket = await googleClient.verifyIdToken({
-                idToken: tokenId,
-                audience: process.env.GOOGLE_CLIENT_ID,
+            const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
             });
-            const { name, email } = ticket.getPayload();
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data');
+            }
+
+            const data = await response.json();
+            const { name, email } = data;
 
             let user = await User.findByEmail(email);
 
@@ -80,19 +85,13 @@ const authService = {
                 );
 
                 user = await User.create(name, email, hashedPassword, stripeCust.id);
-
-                const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-                    expiresIn: 360000,
-                });
-
-                return { user, token };
-            } else {
-                const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-                    expiresIn: 360000,
-                });
-
-                return { user, token };
             }
+
+            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
+                expiresIn: 360000,
+            });
+
+            return { user, token };
         } catch (error) {
             throw new Error(error.message);
         }
