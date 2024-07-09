@@ -38,6 +38,17 @@ const oauthFacebook = async (accessToken) => {
     }
 }
 
+const oauthGoogle = async (accessToken) => {
+    try {
+        const response = await axios.post("http://localhost:5000/api/oauth/google", {
+            accessToken,
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.error || error.message);
+    }
+}
+
 const logout = async () => {
     try {
         const data = await axios.post("http://localhost:5000/api/logout");
@@ -47,4 +58,4 @@ const logout = async () => {
     }
 }
 
-export { storeToken, regularLogin, regularRegister, oauthFacebook, logout };
+export { storeToken, regularLogin, regularRegister, oauthFacebook, oauthGoogle, logout };

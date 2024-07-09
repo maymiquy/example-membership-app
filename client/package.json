@@ -20,7 +20,7 @@
   "@radix-ui/react-scroll-area": "^1.1.0",
   "@radix-ui/react-toast": "^1.2.1",
   "@radix-ui/react-tooltip": "^1.1.0",
-  "@types/react-router-dom": "^5.3.3",
+  "@react-oauth/google": "^0.12.1",
   "axios": "^1.7.2",
   "class-variance-authority": "^0.7.0",
   "clsx": "^2.1.1",
@@ -36,6 +36,7 @@
  "devDependencies": {
   "@types/react": "^18.2.66",
   "@types/react-dom": "^18.2.22",
+  "@types/react-router-dom": "^5.3.3",
   "@vitejs/plugin-react-swc": "^3.5.0",
   "autoprefixer": "^10.4.19",
   "eslint": "^8.57.0",
