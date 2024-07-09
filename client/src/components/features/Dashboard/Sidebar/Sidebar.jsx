@@ -1,11 +1,11 @@
 import React from "react";
-import { useStore } from "../../../hooks/useStore";
-import { useSidebarToggle } from "../../../hooks/useSidebarToggle";
+import { useStore } from "../../../../hooks/useStore";
+import { useSidebarToggle } from "../../../../hooks/useSidebarToggle";
 import Toggle from "./Toggle";
-import { Button } from "../../ui/button";
+import { Button } from "../../../ui/button";
 import { Banana } from "lucide-react";
 import { Link } from "react-router-dom";
-import { cn } from "../../../lib/utils";
+import { cn } from "../../../../lib/utils";
 import MenuLink from "../MenuLink";
 
 const Sidebar = () => {

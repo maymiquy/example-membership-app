@@ -1,5 +1,8 @@
 import React from "react";
-import { Button } from "../../ui/button";
+
+import { Infinity, Newspaper, SquarePlay } from "lucide-react";
+
+import { Button } from "../../../ui/button";
 import {
  Card,
  CardContent,
@@ -7,9 +10,9 @@ import {
  CardFooter,
  CardHeader,
  CardTitle,
-} from "../../ui/card";
-import { Infinity, Newspaper, SquarePlay } from "lucide-react";
-import { cn } from "../../../lib/utils";
+} from "../../../ui/card";
+
+import { cn } from "../../../../lib/utils";
 
 const Pricing = (props) => {
  const pricingList = {

@@ -1,4 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
+
+import { LogOut, User } from "lucide-react";
+
 import {
  DropdownMenu,
  DropdownMenuContent,
@@ -7,17 +10,17 @@ import {
  DropdownMenuLabel,
  DropdownMenuSeparator,
  DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
+} from "../../../ui/dropdown-menu";
 import {
  Tooltip,
  TooltipContent,
  TooltipProvider,
  TooltipTrigger,
-} from "../../ui/tooltip";
-import { Button } from "../../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
-import { LogOut, User } from "lucide-react";
-import { logout } from "../../../services/auth.service";
+} from "../../../ui/tooltip";
+import { Button } from "../../../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "../../../ui/avatar";
+
+import { logout } from "../../../../services/auth.service";
 
 const UserAvatar = (props) => {
  const userAvatar = `${props.user.name.charAt(0).toUpperCase()}${props.user.name

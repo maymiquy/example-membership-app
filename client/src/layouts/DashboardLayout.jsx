@@ -1,10 +1,13 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { useSidebarToggle } from "../hooks/useSidebarToggle";
 import { useStore } from "../hooks/useStore";
-import Sidebar from "../components/Dashboard/Sidebar/Sidebar";
+
 import { cn } from "../lib/utils";
-import Navbar from "../components/Dashboard/Navbar/Navbar";
-import { useLocation } from "react-router-dom";
+
+import Sidebar from "../components/features/Dashboard/Sidebar/Sidebar";
+import Navbar from "../components/features/Dashboard/Navbar/Navbar";
+
 import getMenu from "../lib/menu";
 
 const DashboardLayout = (props) => {

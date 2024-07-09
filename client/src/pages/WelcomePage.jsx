@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 
 import GuestLayout from "../layouts/GuestLayout";
 
-import Authentication from "../components/Auhtentication/Authentication";
-import Heading from "../components/Guest/Header/Heading";
-import Pricing from "../components/Guest/Pricing/Pricing";
-import Spinner from "../components/Common/Spinner";
+import Heading from "../components/features/Guest/Header/Heading";
+import Spinner from "../components/common/Spinner";
 
 import {
  fetchMembership,
  postSubscription,
 } from "../services/membership.service";
+import Authentication from "../components/features/Auth/Authentication";
+import Pricing from "../components/features/Guest/Pricing/Pricing";
 
 const WelcomePage = (props) => {
  const [membership, setMembership] = useState([]);

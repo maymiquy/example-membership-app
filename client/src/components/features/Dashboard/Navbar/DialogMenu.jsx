@@ -1,13 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+import { Banana, MenuIcon } from "lucide-react";
+
 import {
  Dialog,
  DialogContent,
  DialogHeader,
  DialogTrigger,
-} from "../../ui/dialog";
-import { Button } from "../../ui/button";
-import { Banana, MenuIcon, PanelsTopLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+} from "../../../ui/dialog";
+import { Button } from "../../../ui/button";
+
 import MenuLink from "../MenuLink";
 
 const DialogMenu = () => {

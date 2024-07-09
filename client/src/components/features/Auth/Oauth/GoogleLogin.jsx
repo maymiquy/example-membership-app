@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "../../../ui/button";
 import { GrGoogle } from "react-icons/gr";
 import { useGoogleLogin } from "@react-oauth/google";
-import { oauthGoogle, storeToken } from "../../../services/auth.service";
-import { UserContext } from "../../../context/userContext";
+import { oauthGoogle, storeToken } from "../../../../services/auth.service";
+import { UserContext } from "../../../../context/userContext";
 
 const GoogleLogin = () => {
  const { setUser } = useContext(UserContext);

@@ -1,18 +1,20 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import getMenu from "../../lib/menu";
-import { ScrollArea } from "../ui/scroll-area";
-import { Button } from "../ui/button";
+import { useLocation, Link } from "react-router-dom";
+import { logout } from "../../../services/auth.service";
+
 import { Ellipsis, LogOut } from "lucide-react";
+
+import { ScrollArea } from "../../ui/scroll-area";
+import { Button } from "../../ui/button";
 import {
  Tooltip,
  TooltipContent,
  TooltipProvider,
  TooltipTrigger,
-} from "../ui/tooltip";
-import { cn } from "../../lib/utils";
-import { Link } from "react-router-dom";
-import { logout } from "../../services/auth.service";
+} from "../../ui/tooltip";
+
+import { cn } from "../../../lib/utils";
+import getMenu from "../../../lib/menu";
 
 const MenuLink = ({ isOpen }) => {
  const pathname = useLocation().pathname;

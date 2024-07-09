@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { regularRegister } from "../../../../services/auth.service";
+
 import {
  Dialog,
  DialogContent,
@@ -9,12 +11,11 @@ import {
  DialogHeader,
  DialogTitle,
  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { useToast } from "../../ui/use-toast";
-import { regularRegister } from "../../../services/auth.service";
+} from "../../../ui/dialog";
+import { Input } from "../../../ui/input";
+import { Label } from "../../../ui/label";
+import { Button } from "../../../ui/button";
+import { useToast } from "../../../ui/use-toast";
 
 const RegisterModal = () => {
  const [formRegister, setFormRegister] = useState({

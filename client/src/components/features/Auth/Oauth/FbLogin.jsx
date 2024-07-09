@@ -1,9 +1,9 @@
 // FbLogin.jsx
 import React, { useState, useContext } from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
-import { UserContext } from "../../../context/userContext";
-import { oauthFacebook, storeToken } from "../../../services/auth.service";
-import { Button } from "../../ui/button";
+import { UserContext } from "../../../../context/userContext";
+import { oauthFacebook, storeToken } from "../../../../services/auth.service";
+import { Button } from "../../../ui/button";
 import { SiFacebook } from "react-icons/si";
 
 const FbLogin = () => {

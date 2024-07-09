@@ -1,5 +1,7 @@
 import React from "react";
-import Navbar from "../components/Guest/Header/Navbar";
+
+import Navbar from "../components/features/Guest/Header/Navbar";
+
 import { Toaster } from "../components/ui/toaster";
 
 const GuestLayout = (props) => {

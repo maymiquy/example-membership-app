@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { regularLogin, storeToken } from "../../../services/auth.service";
-import { useToast } from "../../ui/use-toast";
+import { regularLogin, storeToken } from "../../../../services/auth.service";
+import { useToast } from "../../../ui/use-toast";
 
 const LoginModal = () => {
  const [formLogin, setFormLogin] = useState({
