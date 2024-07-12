@@ -29,7 +29,7 @@ const membershipService = {
                 mode: 'subscription',
                 success_url: `${process.env.APP_URL_SERVER}/api/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
                 cancel_url: `${process.env.APP_URL_CLIENT}/subscription`,
-                customer: user.stripId,
+                customer: user.stripeId,
             }, {
                 apiKey: process.env.STRIPE_SECRET_KEY,
             });

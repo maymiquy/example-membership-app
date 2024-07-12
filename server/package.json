@@ -26,7 +26,8 @@
   "express-validator": "^7.1.0",
   "jsonwebtoken": "^9.0.2",
   "prisma": "^5.15.0",
-  "stripe": "^15.11.0"
+  "stripe": "^15.11.0",
+  "uuid": "^10.0.0"
  },
  "devDependencies": {
   "morgan": "^1.10.0",

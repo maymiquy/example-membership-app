@@ -1,12 +1,14 @@
+const { v4: uuidv4 } = require('uuid');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
     const articles = [
         ...Array.from({ length: 15 }, (_, i) => ({
+            id: uuidv4(),
             title: `Article ${i + 1}`,
-            body: `This is the description of Article ${i + 1}.`,
-            imgUrl: `https://example.com/article${i + 1}.jpg`,
+            body: `This is the description of Article ${i + 1}, description of Article, description of Article, description of Article, description of Article .`,
+            imgUrl: `https://via.placeholder.com/400x200/?text=Article+${i + 1}`,
             releaseDate: new Date(),
         })),
     ];
@@ -19,10 +21,12 @@ async function main() {
 
     const videos = [
         ...Array.from({ length: 15 }, (_, i) => ({
+            id: uuidv4(),
             title: `Video ${i + 1}`,
-            desc: `This is the description of Video ${i + 1}.`,
-            videoUrl: `https://example.com/video${i + 1}.mp4`,
-            releaseDate: new Date(),
+            description: `This is the description of Video ${i + 1}.`,
+            thumbnailUrl: `https://via.placeholder.com/400x200/?text=Video+${i + 1}`,
+            videoUrl: null,
+            uploadDate: new Date(),
         })),
     ];
     await prisma.video.createMany({

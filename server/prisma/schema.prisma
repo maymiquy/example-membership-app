@@ -19,17 +19,18 @@ model User {
 }
 
 model Article {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   title       String
   body        String
-  releaseDate DateTime @default(now())
   imgUrl      String
+  releaseDate DateTime @default(now())
 }
 
 model Video {
-  id          Int      @id @default(autoincrement())
-  title       String
-  desc        String
-  videoUrl    String
-  releaseDate DateTime @default(now())
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  thumbnailUrl String
+  videoUrl     String?
+  uploadDate   DateTime @default(now())
 }
