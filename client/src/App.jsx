@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import ProtectedRoute from "./ProtectedRoutes";
-import ContentsPage from "./pages/Dashboard/ContentsPage";
+import DashboardPage from "./pages/Dashboard/DashboardPage";
 import { UserContext } from "./context/userContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -14,8 +14,8 @@ function App() {
     <Route path="/" element={<WelcomePage user={user} />} />
     <Route element={<ProtectedRoute />}>
      <Route
-      path="/contents"
-      element={<ContentsPage user={user} loading={loading} error={error} />}
+      path="/dashboard"
+      element={<DashboardPage user={user} loading={loading} />}
      />
     </Route>
    </Routes>

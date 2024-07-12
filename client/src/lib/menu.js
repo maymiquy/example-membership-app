@@ -1,4 +1,4 @@
-import { LayoutGrid, SquarePen, Tag } from "lucide-react";
+import { LayoutGrid, Newspaper, SquarePlay } from "lucide-react";
 
 const getMenu = (pathname) => {
     return [
@@ -7,8 +7,8 @@ const getMenu = (pathname) => {
             menus: [
                 {
                     label: 'Dashboard',
-                    href: '/dashboard/contents',
-                    active: pathname.includes('/dashboard/contents'),
+                    href: '/dashboard',
+                    active: pathname.includes('/dashboard'),
                     icon: LayoutGrid,
                     submenus: []
                 }
@@ -19,16 +19,16 @@ const getMenu = (pathname) => {
             menus: [
                 {
                     label: 'Articles',
-                    href: '/dashboard/articles',
-                    active: pathname.includes('/dashboard/articles'),
-                    icon: SquarePen,
+                    href: '/dashboard/article',
+                    active: pathname.includes('/dashboard/article'),
+                    icon: Newspaper,
                     submenus: []
                 },
                 {
                     label: 'Videos',
-                    href: '/dashboard/videos',
-                    active: pathname.includes('/dashboard/videos'),
-                    icon: Tag,
+                    href: '/dashboard/video',
+                    active: pathname.includes('/dashboard/video'),
+                    icon: SquarePlay,
                     submenus: []
                 }
             ]

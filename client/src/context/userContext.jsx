@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
     setUser(user);
     setLoading(false);
     setError(null);
-    user.membershipType ? navigate("/contents") : navigate("/");
+    user.membershipType ? navigate("/dashboard") : navigate("/");
    } catch (error) {
     setUser(null);
     setLoading(false);

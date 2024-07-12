@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { UserContext } from "./context/userContext";
+import Spinner from "./components/common/Spinner";
 
 const ProtectedRoute = () => {
- const { user, loading, error } = useContext(UserContext);
+ const { user, loading } = useContext(UserContext);
 
- if (loading) {
-  return <div>Loading...</div>;
- }
-
- if (error) {
-  return <div>Error: {error}</div>;
- }
+ if (loading)
+  return (
+   <div className="w-full h-screen flex justify-center items-center">
+    <Spinner size="large" />
+   </div>
+  );
 
  return user ? <Outlet /> : <Navigate to="/" />;
 };
