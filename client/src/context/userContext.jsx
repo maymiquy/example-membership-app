@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
    setLoading(false);
    setError(null);
   }
- }, [token, navigate]);
+ }, [token]);
 
  return (
   <UserContext.Provider value={{ user, setUser, loading, error }}>

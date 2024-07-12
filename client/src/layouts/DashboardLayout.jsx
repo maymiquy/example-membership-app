@@ -24,19 +24,21 @@ const DashboardLayout = (props) => {
  const [title, setTitle] = React.useState("");
  const [breadcrumbList, setBreadcrumbList] = React.useState([]);
  const pathname = useLocation().pathname;
+ const menuList = getMenu(pathname);
+ const menus = menuList.map(({ menus }) => menus);
+ const { label, href } = menus.flat().find((item) => item.href === pathname);
 
  React.useEffect(() => {
-  const menu = getMenu(pathname);
-  setTitle([menu[0].groupLabel, menu[0].menus[0].label].join(""));
+  setTitle(label);
+  console.log(pathname, label, href);
 
-  const breadcrumbItems = [
-   ...menu[0].menus.map((item) => ({ label: item.label, href: item.href })),
-  ];
+  const breadcrumbItems = [{ label: label, href: href }];
   if (pathname !== "/dashboard") {
    breadcrumbItems.unshift({ label: "Dashboard", href: "/dashboard" });
   }
+
   setBreadcrumbList(breadcrumbItems);
- }, [pathname]);
+ }, [pathname, label, href]);
 
  if (!sidebar) return null;
 
@@ -58,9 +60,13 @@ const DashboardLayout = (props) => {
         {breadcrumbList.map((item, index) => (
          <React.Fragment key={index}>
           <BreadcrumbItem>
-           <BreadcrumbLink asChild>
-            <Link to={item.href}>{item.label}</Link>
-           </BreadcrumbLink>
+           {breadcrumbList.length - 1 === index ? (
+            <BreadcrumbPage>{item.label}</BreadcrumbPage>
+           ) : (
+            <BreadcrumbLink asChild>
+             <Link to={item.href}>{item.label}</Link>
+            </BreadcrumbLink>
+           )}
           </BreadcrumbItem>
           {index < breadcrumbList.length - 1 && <BreadcrumbSeparator />}
          </React.Fragment>

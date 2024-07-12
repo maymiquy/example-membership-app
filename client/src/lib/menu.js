@@ -8,7 +8,7 @@ const getMenu = (pathname) => {
                 {
                     label: 'Dashboard',
                     href: '/dashboard',
-                    active: pathname.includes('/dashboard'),
+                    active: pathname === ('/dashboard'),
                     icon: LayoutGrid,
                     submenus: []
                 }
@@ -20,14 +20,14 @@ const getMenu = (pathname) => {
                 {
                     label: 'Articles',
                     href: '/dashboard/article',
-                    active: pathname.includes('/dashboard/article'),
+                    active: pathname.includes('/article'),
                     icon: Newspaper,
                     submenus: []
                 },
                 {
                     label: 'Videos',
                     href: '/dashboard/video',
-                    active: pathname.includes('/dashboard/video'),
+                    active: pathname.includes('/video'),
                     icon: SquarePlay,
                     submenus: []
                 }

@@ -4,14 +4,7 @@ import { UserContext } from "./context/userContext";
 import Spinner from "./components/common/Spinner";
 
 const ProtectedRoute = () => {
- const { user, loading } = useContext(UserContext);
-
- if (loading)
-  return (
-   <div className="w-full h-screen flex justify-center items-center">
-    <Spinner size="large" />
-   </div>
-  );
+ const { user } = useContext(UserContext);
 
  return user ? <Outlet /> : <Navigate to="/" />;
 };
