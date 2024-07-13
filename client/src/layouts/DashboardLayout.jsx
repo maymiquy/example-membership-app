@@ -7,17 +7,9 @@ import { cn } from "../lib/utils";
 
 import Sidebar from "../components/features/Dashboard/Sidebar/Sidebar";
 import Navbar from "../components/features/Dashboard/Navbar/Navbar";
+import Breadcrumbs from "../components/common/Breadcrumbs";
 
 import getMenu from "../lib/menu";
-import { Link } from "react-router-dom";
-import {
- Breadcrumb,
- BreadcrumbItem,
- BreadcrumbLink,
- BreadcrumbList,
- BreadcrumbPage,
- BreadcrumbSeparator,
-} from "../components/ui/breadcrumb";
 
 const DashboardLayout = (props) => {
  const sidebar = useStore(useSidebarToggle, (state) => state);
@@ -30,7 +22,6 @@ const DashboardLayout = (props) => {
 
  React.useEffect(() => {
   setTitle(label);
-  console.log(pathname, label, href);
 
   const breadcrumbItems = [{ label: label, href: href }];
   if (pathname !== "/dashboard") {
@@ -53,27 +44,8 @@ const DashboardLayout = (props) => {
      )}
     >
      <Navbar title={title} user={props.user} />
-
      <div className="container space-y-2 md:space-y-4 py-6 px-4 sm:px-8">
-      <Breadcrumb>
-       <BreadcrumbList>
-        {breadcrumbList.map((item, index) => (
-         <React.Fragment key={index}>
-          <BreadcrumbItem>
-           {breadcrumbList.length - 1 === index ? (
-            <BreadcrumbPage>{item.label}</BreadcrumbPage>
-           ) : (
-            <BreadcrumbLink asChild>
-             <Link to={item.href}>{item.label}</Link>
-            </BreadcrumbLink>
-           )}
-          </BreadcrumbItem>
-          {index < breadcrumbList.length - 1 && <BreadcrumbSeparator />}
-         </React.Fragment>
-        ))}
-       </BreadcrumbList>
-      </Breadcrumb>
-
+      <Breadcrumbs menu={breadcrumbList} />
       {props.children}
      </div>
     </main>

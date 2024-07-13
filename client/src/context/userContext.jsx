@@ -10,7 +10,6 @@ export const UserProvider = ({ children }) => {
  const [loading, setLoading] = useState(true);
  const [error, setError] = useState(null);
  const navigate = useNavigate();
- console.log(user);
 
  const token = localStorage.getItem("authToken");
 
@@ -23,7 +22,7 @@ export const UserProvider = ({ children }) => {
     setUser(user);
     setLoading(false);
     setError(null);
-    user.membershipType ? navigate("/dashboard") : navigate("/");
+    user.membershipType && navigate("/dashboard");
    } catch (error) {
     setUser(null);
     setLoading(false);

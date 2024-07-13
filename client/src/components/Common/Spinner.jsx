@@ -14,7 +14,7 @@ const Spinner = ({ size = "medium" }) => {
    break;
  }
  return (
-  <div className="flex justify-center items-center h-64">
+  <div className="flex justify-center items-center min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
    <div
     className={`spinner border-4 border-primary border-t-transparent rounded-full ${spinnerSize} animate-spin`}
    />

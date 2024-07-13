@@ -5,6 +5,8 @@ import ProtectedRoute from "./ProtectedRoutes";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
 import { UserContext } from "./context/userContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import ArticlesPage from "./pages/Dashboard/Articles/ArticlesPage";
+import VideosPage from "./pages/Dashboard/Videos/VideosPage";
 
 function App() {
  const { user, loading, error } = useContext(UserContext);
@@ -16,6 +18,14 @@ function App() {
      <Route
       path="/dashboard"
       element={<DashboardPage user={user} loading={loading} />}
+     />
+     <Route
+      path="/dashboard/article"
+      element={<ArticlesPage user={user} loading={loading} />}
+     />
+     <Route
+      path="/dashboard/video"
+      element={<VideosPage user={user} loading={loading} />}
      />
     </Route>
    </Routes>

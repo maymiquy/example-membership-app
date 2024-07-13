@@ -15,7 +15,6 @@ import Pricing from "../components/features/Guest/Pricing/Pricing";
 const WelcomePage = (props) => {
  const [membership, setMembership] = useState([]);
  const [loading, setLoading] = useState(true);
- console.log(membership);
 
  useEffect(() => {
   (async () => {
