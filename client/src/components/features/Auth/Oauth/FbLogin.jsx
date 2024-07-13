@@ -5,6 +5,7 @@ import { UserContext } from "../../../../context/userContext";
 import { oauthFacebook, storeToken } from "../../../../services/auth.service";
 import { Button } from "../../../ui/button";
 import { SiFacebook } from "react-icons/si";
+import { toast } from "../../../ui/use-toast";
 
 const FbLogin = () => {
  const { setUser } = useContext(UserContext);
@@ -18,10 +19,20 @@ const FbLogin = () => {
    localStorage.setItem("authToken", token);
    if (token) storeToken(token);
    setUser(user);
-   window.location.reload();
+
+   toast({
+    title: "Login Successful",
+   });
   } catch (error) {
    console.error("Facebook login failed:", error.message);
-   window.location.reload();
+   const messageError = error.response.data;
+
+   toast({
+    title: "Login Failed",
+    description: messageError.error || messageError.errors[0].msg,
+    variant: "destructive",
+   });
+
    setIsError(true);
   }
  };

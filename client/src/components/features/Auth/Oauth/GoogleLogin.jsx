@@ -4,6 +4,7 @@ import { GrGoogle } from "react-icons/gr";
 import { useGoogleLogin } from "@react-oauth/google";
 import { oauthGoogle, storeToken } from "../../../../services/auth.service";
 import { UserContext } from "../../../../context/userContext";
+import { toast } from "../../../ui/use-toast";
 
 const GoogleLogin = () => {
  const { setUser } = useContext(UserContext);
@@ -15,13 +16,23 @@ const GoogleLogin = () => {
     localStorage.setItem("authToken", token);
     if (token) storeToken(token);
     setUser(user);
-    window.location.reload();
+
+    toast({
+     title: "Login Successful",
+    });
    } catch (error) {
     console.error("Error during google login:", error.message);
    }
   },
   onError: (error) => {
    console.error("Google login failed:", error);
+   const messageError = error.response.data;
+
+   toast({
+    title: "Login Failed",
+    description: messageError.error || messageError.errors[0].msg,
+    variant: "destructive",
+   });
   },
  });
 

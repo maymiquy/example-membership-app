@@ -10,6 +10,7 @@ import Navbar from "../components/features/Dashboard/Navbar/Navbar";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 
 import getMenu from "../lib/menu";
+import { Toaster } from "../components/ui/toaster";
 
 const DashboardLayout = (props) => {
  const sidebar = useStore(useSidebarToggle, (state) => state);
@@ -48,6 +49,7 @@ const DashboardLayout = (props) => {
       <Breadcrumbs menu={breadcrumbList} />
       {props.children}
      </div>
+     <Toaster />
     </main>
     <footer
      className={cn(
