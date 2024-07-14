@@ -7,6 +7,7 @@ import { UserContext } from "./context/userContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ArticlesPage from "./pages/Dashboard/Articles/ArticlesPage";
 import VideosPage from "./pages/Dashboard/Videos/VideosPage";
+import DetailsPage from "./pages/Dashboard/Details/DetailsPage";
 
 function App() {
  const { user, loading, error } = useContext(UserContext);
@@ -26,6 +27,10 @@ function App() {
      <Route
       path="/dashboard/video"
       element={<VideosPage user={user} loading={loading} />}
+     />
+     <Route
+      path="/dashboard/:type/:id"
+      element={<DetailsPage user={user} loading={loading} />}
      />
     </Route>
    </Routes>

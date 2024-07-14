@@ -5,6 +5,7 @@ const videos = [
         description: `This is the description of Video ${i + 1}.`,
         thumbnailUrl: `https://via.placeholder.com/400x200/?text=Video+${i + 1}`,
         uploadDate: new Date(),
+        type: "video",
     })),
 ];
 

@@ -20,7 +20,7 @@ const SectionGrid = (props) => {
       uploadDate={item.uploadDate?.toDateString()}
       imgUrl={item.imgUrl}
       thumbnailUrl={item.thumbnailUrl}
-      href={item.href}
+      href={`/dashboard/${item.type}/${item.id}`}
      />
     ))}
    </div>

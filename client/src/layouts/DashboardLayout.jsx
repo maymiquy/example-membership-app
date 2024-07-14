@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useSidebarToggle } from "../hooks/useSidebarToggle";
 import { useStore } from "../hooks/useStore";
 
@@ -14,12 +14,18 @@ import { Toaster } from "../components/ui/toaster";
 
 const DashboardLayout = (props) => {
  const sidebar = useStore(useSidebarToggle, (state) => state);
+ const { type } = useParams();
  const [title, setTitle] = React.useState("");
  const [breadcrumbList, setBreadcrumbList] = React.useState([]);
  const pathname = useLocation().pathname;
  const menuList = getMenu(pathname);
  const menus = menuList.map(({ menus }) => menus);
- const { label, href } = menus.flat().find((item) => item.href === pathname);
+ const { label = "", href = "" } = menus
+  .flat()
+  .find((item) => item.href === pathname) ?? {
+  label: `Detail ${type.charAt(0).toUpperCase() + type.slice(1)}`,
+  href: "",
+ };
 
  React.useEffect(() => {
   setTitle(label);

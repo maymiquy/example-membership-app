@@ -9,6 +9,7 @@ import {
  CardHeader,
  CardTitle,
 } from "../ui/card";
+import { Badge } from "../ui/badge";
 
 const CardSlider = (props) => {
  return (
@@ -22,17 +23,17 @@ const CardSlider = (props) => {
      />
     </div>
     <CardHeader>
-     <CardTitle className="text-center text-xl md:text-3xl font-semibold">
+     <CardTitle className="text-start text-lg md:text-xl font-semibold line-clamp-2">
       {props.title}
      </CardTitle>
     </CardHeader>
-    <CardContent className="flex flex-col justify-center items-center my-4 px-3 md:px-5 space-y-4">
-     <CardDescription className="text-start text-xs text-gray-500 w-full">
+    <CardContent className="flex flex-col justify-center items-start my-4 px-3 md:px-5 space-y-4">
+     <Badge className="text-start text-[10px] text-zinc-200">
       {props.releaseDate || props.uploadDate}
-     </CardDescription>
-     <p className="text-sm md:text-md line-clamp-4">
+     </Badge>
+     <CardDescription className="text-sm md:text-md line-clamp-4 leading-relaxed">
       {props.body || props.description}
-     </p>
+     </CardDescription>
     </CardContent>
     <CardFooter className="relative bottom-0 px-6 my-4">
      <Link to={props.href}>
