@@ -35,17 +35,21 @@ const membershipController = {
             const { email } = session.customer_details;
 
             if (session.payment_status === 'paid') {
+                let membershipType;
                 if (session.amount_total === 900000) {
-                    await userService.updateUserMembership(email, 'Basic');
+                    membershipType = 'Basic';
                 } else if (session.amount_total === 1900000) {
-                    await userService.updateUserMembership(email, 'Premium');
+                    membershipType = 'Premium';
                 } else if (session.amount_total === 2900000) {
-                    await userService.updateUserMembership(email, 'Platinum');
+                    membershipType = 'Platinum';
                 }
 
-                res.redirect(`${process.env.APP_URL_CLIENT}/contents`);
+                await userService.updateUserMembership(email, membershipType);
+                await userService.createInitialUserDailyLimit(email);
+
+                res.status(200).json({ message: 'Success' });
             } else {
-                res.status(400).json({ message: 'Payment failed.' });
+                res.status(400).json({ message: 'Failed' });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

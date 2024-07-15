@@ -24,4 +24,17 @@ const postSubscription = async (priceId) => {
     }
 };
 
-export { fetchMembership, postSubscription };
+const postSuccessCheckout = async (sessionId) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/api/checkout/success?session_id=${sessionId}`,
+        );
+        const { data } = response.data;
+        console.log("success checkout service :", data);
+        return data;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+export { fetchMembership, postSubscription, postSuccessCheckout };

@@ -1,4 +1,3 @@
-// FbLogin.jsx
 import React, { useState, useContext } from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 import { UserContext } from "../../../../context/userContext";

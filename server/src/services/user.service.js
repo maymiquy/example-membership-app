@@ -28,6 +28,16 @@ const userService = {
             throw new Error(error.message);
         }
     },
-};
+
+    async createInitialUserDailyLimit(email) {
+        try {
+            const user = await User.initialDailyLimit(email, 0, 0, new Date());
+
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+}
 
 module.exports = userService;

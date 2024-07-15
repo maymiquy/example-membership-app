@@ -53,6 +53,22 @@ class User {
             throw new Error(error.message);
         }
     }
+
+    static async initialDailyLimit(email, articleLimit, videoLimit, resetDailyLimit) {
+        try {
+            const user = await prisma.user.update({
+                where: { email: email },
+                data: {
+                    articleLimit: articleLimit,
+                    videoLimit: videoLimit,
+                    resetDailyLimit: resetDailyLimit,
+                },
+            });
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }
 
 module.exports = User;
