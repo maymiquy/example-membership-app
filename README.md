@@ -2,7 +2,17 @@
 
 ## Express + React + Vite + Prisma
 
-### Client:
+## FEATURES:
+
+- Regular Login & Register
+- OAuth Login Facebook & Google
+- Subscribe Membership
+- Payment Gateway
+- Type Basic can access 3 article dan 3 video
+- Type Premium can access 10 article dan 10 video
+- Type Platinum can access unlimited article dan video
+
+## Client:
 
 - [x] Auth Login Feature
 - [x] Facebook OAUTH Feature
@@ -15,9 +25,10 @@
 - [x] Fetch article & video data from API
 - [x] Dashboard UI
 - [x] Article & Video Content Page
-- [] Article Detail Page
-- [] Video Detail Page
-- [] Implement logic to display articles & videos based on user membership type
+- [x] Article Detail Page
+- [x] Video Detail Page
+- [x] Checkout Status Page
+- [x] Implement logic to display articles & videos based on user membership type
 
 ### Client Improvements:
 
@@ -25,7 +36,7 @@
 - [] Search feature
 - [] Video playback feature
 
-### Server:
+## Server:
 
 - [x] LOGIN, REGISTER, FACEBOOK OAUTH, GOOGLE OAUTH API
 - [x] USER API
@@ -40,4 +51,4 @@
 ### Server Improvements:
 
 - [] Refactor to clean code
-- [] Video storage
+- [] Files storage
