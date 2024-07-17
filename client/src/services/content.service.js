@@ -2,8 +2,8 @@ import axios from "axios";
 
 const fetchContents = async () => {
     try {
-        const videos = await axios.get("http://localhost:5000/api/contents");
-        return videos;
+        const response = await axios.get("http://localhost:5000/api/contents");
+        return response.data;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -11,8 +11,8 @@ const fetchContents = async () => {
 
 const fetchSingleArticle = async (id) => {
     try {
-        const article = await axios.get(`http://localhost:5000/api/contents/article/${id}`);
-        return article;
+        const response = await axios.get(`http://localhost:5000/api/contents/article/${id}`);
+        return response.data;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -20,8 +20,8 @@ const fetchSingleArticle = async (id) => {
 
 const fetchSingleVideo = async (id) => {
     try {
-        const video = await axios.get(`http://localhost:5000/api/contents/video/${id}`);
-        return video;
+        const response = await axios.get(`http://localhost:5000/api/contents/video/${id}`);
+        return response.data;
     } catch (error) {
         throw new Error(error.message);
     }

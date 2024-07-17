@@ -2,15 +2,45 @@ import React, { useEffect, useRef, useState } from "react";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { useParams } from "react-router-dom";
 import Container from "../../../components/common/Container";
-import articles from "../../../lib/articles";
-import videos from "../../../lib/videos";
 import SectionDetails from "../../../components/features/Dashboard/Section/SectionDetails";
+import {
+ fetchSingleArticle,
+ fetchSingleVideo,
+} from "../../../services/content.service";
+import Spinner from "../../../components/common/Spinner";
 
 const DetailsPage = (props) => {
  const videoRef = useRef(null);
+ const [item, setItem] = useState(null);
+ const [loading, setLoading] = useState(true);
  const [isPlaying, setIsPlaying] = useState(false);
  const [showPlayButton, setShowPlayButton] = useState(false);
  const { id, type } = useParams();
+
+ useEffect(() => {
+  const fetchData = async () => {
+   try {
+    let data;
+    if (type === "article") {
+     const response = await fetchSingleArticle(id);
+     data = response.data;
+    } else if (type === "video") {
+     const response = await fetchSingleVideo(id);
+     data = response.data;
+    }
+    setItem(data);
+   } catch (error) {
+    console.error("Error fetching data:", error);
+    setItem(null);
+   } finally {
+    setTimeout(() => {
+     setLoading(false);
+    }, 700);
+   }
+  };
+
+  fetchData();
+ }, [id, type]);
 
  useEffect(() => {
   setIsPlaying(false);
@@ -53,17 +83,21 @@ const DetailsPage = (props) => {
   }
  };
 
- let data;
-
- if (type === "article") {
-  data = articles.find((a) => a.id === parseInt(id));
- } else if (type === "video") {
-  data = videos.find((v) => v.id === parseInt(id));
- } else {
+ if (loading) {
   return (
    <DashboardLayout user={props.user}>
     <Container>
-     <h1 className="text-4xl text-center">Invalid content type</h1>
+     <Spinner />
+    </Container>
+   </DashboardLayout>
+  );
+ }
+
+ if (!item) {
+  return (
+   <DashboardLayout user={props.user}>
+    <Container>
+     <h1 className="text-4xl text-center">Oopss, Content not found</h1>
     </Container>
    </DashboardLayout>
   );
@@ -72,18 +106,19 @@ const DetailsPage = (props) => {
  return (
   <DashboardLayout user={props.user}>
    <SectionDetails
-    title={data.title}
-    imgUrl={type === "article" ? data.imgUrl : null}
-    videoUrl={
-     type === "video"
-      ? "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-      : null
-    }
-    body={data.body || data.description}
-    date={
-     data.releaseDate?.toLocaleDateString() ||
-     data.uploadDate?.toLocaleDateString()
-    }
+    title={item.title}
+    imgUrl={type === "article" ? item.imgUrl : null}
+    videoUrl={type === "video" ? item.videoUrl : null}
+    body={item.body || item.description}
+    date={new Date(item.releaseDate || item.uploadDate).toLocaleDateString(
+     "en-GB",
+     {
+      weekday: "long",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+     },
+    )}
     isPlaying={isPlaying}
     showPlayButton={showPlayButton}
     videoRef={videoRef}

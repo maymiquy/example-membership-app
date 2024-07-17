@@ -34,7 +34,15 @@ const CardSlider = (props) => {
     </CardHeader>
     <CardContent className="flex flex-col justify-center items-start my-4 px-3 md:px-5 space-y-4">
      <Badge className="text-start text-[10px] text-zinc-200">
-      {props.releaseDate || props.uploadDate}
+      {new Date(props.releaseDate || props.uploadDate).toLocaleDateString(
+       "en-GB",
+       {
+        weekday: "long",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+       },
+      )}
      </Badge>
      <CardDescription className="text-sm md:text-md line-clamp-4 leading-relaxed">
       {props.body || props.description}

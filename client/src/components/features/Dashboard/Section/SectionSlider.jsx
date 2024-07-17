@@ -23,8 +23,8 @@ const SectionSlider = (props) => {
        title={item.title}
        body={item.body}
        description={item.description}
-       releaseDate={item.releaseDate?.toDateString()}
-       uploadDate={item.uploadDate?.toDateString()}
+       releaseDate={item.releaseDate}
+       uploadDate={item.uploadDate}
        imgUrl={item.imgUrl}
        thumbnailUrl={item.thumbnailUrl}
        href={`/dashboard/${item.type}/${item.id}`}

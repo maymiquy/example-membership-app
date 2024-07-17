@@ -17,7 +17,7 @@ const contentController = {
 
     async getArticleById(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            const id = req.params.id;
             const article = await contentService.getArticle(id);
             res.status(200).json({ data: article });
         } catch (error) {
@@ -27,7 +27,7 @@ const contentController = {
 
     async getVideoById(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            const id = req.params.id;
             const video = await contentService.getVideo(id);
             res.status(200).json({ data: video });
         } catch (error) {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Play, Pause } from "lucide-react";
+import { Play, Pause, ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import {
  Card,
  CardContent,
@@ -11,8 +12,11 @@ import {
 import { cn } from "../../../../lib/utils";
 import { Badge } from "../../../ui/badge";
 import Container from "../../../common/Container";
+import { Button } from "../../../ui/button";
 
 const SectionDetails = (props) => {
+ const navigate = useNavigate();
+
  const splitTextIntoParagraphs = (text) => {
   const paragraphs = text.split(/[\n]+/);
   return paragraphs.map((paragraph, index) => (
@@ -30,6 +34,10 @@ const SectionDetails = (props) => {
     {paragraph.trim()}
    </CardDescription>
   ));
+ };
+
+ const handleBack = () => {
+  navigate(-1);
  };
 
  return (
@@ -74,10 +82,20 @@ const SectionDetails = (props) => {
        </div>
       </div>
      )}
+     <Badge className={"mb-8"}>Published on {props.date}</Badge>
      <>{splitTextIntoParagraphs(props.body)}</>
     </CardContent>
     <CardFooter>
-     <Badge>Published on {props.date}</Badge>
+     <Button
+      className="font-semibold flex justify-center text-sm md:tex-md items-center w-full py-4"
+      variant="outline"
+      onClick={handleBack}
+     >
+      <span>
+       <ChevronLeft className="inline-block mr-2" size={18} />
+      </span>
+      <p>Back</p>
+     </Button>
     </CardFooter>
    </Card>
   </Container>

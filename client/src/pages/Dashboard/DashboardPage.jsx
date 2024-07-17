@@ -3,8 +3,7 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import Spinner from "../../components/common/Spinner";
 import SectionSlider from "../../components/features/Dashboard/Section/SectionSlider";
 import { Newspaper, SquarePlay } from "lucide-react";
-import articles from "../../lib/articles";
-import videos from "../../lib/videos";
+import { fetchContents } from "../../services/content.service";
 
 const DashboardPage = (props) => {
  const [article, setArticle] = React.useState([]);
@@ -14,10 +13,9 @@ const DashboardPage = (props) => {
  React.useEffect(() => {
   (async () => {
    try {
-    const dataArticle = await articles;
-    const dataVideo = await videos;
-    setArticle(dataArticle);
-    setVideo(dataVideo);
+    const { data } = await fetchContents();
+    setArticle(data.articles);
+    setVideo(data.videos);
    } catch (error) {
     setArticle([]);
     setVideo([]);
@@ -37,6 +35,7 @@ const DashboardPage = (props) => {
    ) : (
     <>
      <SectionSlider
+      ider
       title="Article"
       icon={<Newspaper className="w-8 h-8 text-gray-700" />}
       data={article}

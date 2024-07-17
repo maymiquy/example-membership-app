@@ -3,7 +3,7 @@ import Spinner from "../../../components/common/Spinner";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import SectionGrid from "../../../components/features/Dashboard/Section/SectionGrid";
 import { SquarePlay } from "lucide-react";
-import videos from "../../../lib/videos";
+import { fetchContents } from "../../../services/content.service";
 
 const VideosPage = (props) => {
  const [video, setVideo] = React.useState([]);
@@ -12,8 +12,8 @@ const VideosPage = (props) => {
  React.useEffect(() => {
   (async () => {
    try {
-    const data = await videos;
-    setVideo(data);
+    const { data } = await fetchContents();
+    setVideo(data.videos);
    } catch (error) {
     setVideo([]);
     throw new Error(error.message);
