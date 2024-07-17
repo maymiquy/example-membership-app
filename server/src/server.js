@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const app = express();
 
 const cors = require('cors');
+const { dailyResetScheduler } = require('./middlewares/scheduler.middleware');
 
 app.use(express.json());
 app.use(cors());
@@ -20,6 +21,8 @@ app.use('/', (req, res) => {
         status: 200
     });
 });
+
+dailyResetScheduler();
 
 const port = process.env.PORT;
 const host = process.env.HOST;

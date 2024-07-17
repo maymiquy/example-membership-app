@@ -101,6 +101,56 @@ class User {
             throw new Error(error.message);
         }
     }
+
+    static async resetDailyLimit() {
+        try {
+            console.log('Attempting to reset daily limits...');
+
+            // Fetch all users that need reset
+            const usersToReset = await prisma.user.findMany({
+                where: {
+                    resetDailyLimit: {
+                        lte: new Date()
+                    }
+                }
+            });
+
+            // Update each user individually
+            const updatePromises = usersToReset.map(user => {
+                let newArticleLimit, newVideoLimit;
+
+                switch (user.membershipType) {
+                    case 'Basic':
+                        newArticleLimit = 3;
+                        newVideoLimit = 3;
+                        break;
+                    case 'Premium':
+                        newArticleLimit = 10;
+                        newVideoLimit = 10;
+                        break;
+                    default:
+                        newArticleLimit = 999999;
+                        newVideoLimit = 999999;
+                }
+
+                return prisma.user.update({
+                    where: { id: user.id },
+                    data: {
+                        articleLimit: newArticleLimit,
+                        videoLimit: newVideoLimit,
+                        resetDailyLimit: new Date(new Date().setHours(24, 0, 0, 0))
+                    }
+                });
+            });
+
+            const results = await Promise.all(updatePromises);
+            console.log('Reset completed. Affected users:', results.length);
+            return { count: results.length };
+        } catch (error) {
+            console.error('Error in resetDailyLimit:', error);
+            throw new Error(error.message);
+        }
+    }
 }
 
 module.exports = User;

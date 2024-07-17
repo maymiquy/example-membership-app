@@ -58,6 +58,14 @@ const membershipService = {
         }
     },
 
+    async resetDailyLimit() {
+        try {
+            const result = await User.resetDailyLimit();
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };
 
 module.exports = membershipService;
