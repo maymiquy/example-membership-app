@@ -1,10 +1,10 @@
-import { Banana } from "lucide-react";
+import { Clover } from "lucide-react";
 import React from "react";
 
 const Heading = (props) => {
  return (
   <>
-  {!props.user && <Banana className="w-16 h-16 mb-4" />}
+   {!props.user && <Clover className="w-16 h-16 mb-4" />}
    <h1 className="text-center text-2xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1]">
     {props.user ? `Welcome, ${props.user.name}` : "Welcome to Example App"}
    </h1>

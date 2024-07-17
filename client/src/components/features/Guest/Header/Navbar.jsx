@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { Banana } from "lucide-react";
+import { Clover } from "lucide-react";
 
 import { Button } from "../../../ui/button";
 import UserAvatar from "./UserAvatar";
@@ -16,7 +16,7 @@ const Navbar = (props) => {
       href="/"
       className="flex justify-start items-center hover:opacity-85 transition-opacity duration-300"
      >
-      <Banana className="w-6 h-6 mr-3" />
+      <Clover className="w-6 h-6 mr-3" />
       <span className="font-bold">Example App</span>
      </Link>
      <nav className="ml-auto flex items-center gap-2">

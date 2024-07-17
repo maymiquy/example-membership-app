@@ -57,10 +57,15 @@ const UserAvatar = (props) => {
      </DropdownMenuLabel>
      <DropdownMenuSeparator />
      <DropdownMenuGroup>
-      <span className="relative flex flex-col space-y-2 px-2 py-1.5">
+      <div className="relative flex flex-col space-y-2 px-2 py-1.5">
        <p className="text-sm font-medium leading-none">{props.user.name}</p>
        <p className="text-xs leading-none text-muted-foreground">
         {props.user.email}
+       </p>
+       <p className="text-xs truncate text-muted-foreground">
+        <span className="font-semibold text-gray-800">Cust ID</span>
+        <span className="ml-[11px] mr-1 font bold">:</span>
+        {props.user.stripeId}
        </p>
        <p className="text-xs truncate text-muted-foreground">
         <span className="font-semibold text-gray-800">Member</span>
@@ -68,11 +73,17 @@ const UserAvatar = (props) => {
         {props.user.membershipType ? props.user.membershipType : "-"}
        </p>
        <p className="text-xs truncate text-muted-foreground">
-        <span className="font-semibold text-gray-800">Cust ID</span>
-        <span className="ml-[11px] mr-1 font bold">:</span>
-        {props.user.stripeId}
+        <span className="font-semibold text-gray-800">Daily Limit</span>
+        <span className="ml-1 mr-1 font bold">: </span>
+        {props.user.membershipType === "Basic"
+         ? "3"
+         : props.user.membershipType === "Premium"
+         ? "10"
+         : props.user.membershipType === "Platinum"
+         ? "Unlimited"
+         : "-"}
        </p>
-      </span>
+      </div>
      </DropdownMenuGroup>
      <DropdownMenuSeparator />
      <DropdownMenuItem

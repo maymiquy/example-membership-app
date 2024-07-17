@@ -3,7 +3,7 @@ import { useStore } from "../../../../hooks/useStore";
 import { useSidebarToggle } from "../../../../hooks/useSidebarToggle";
 import Toggle from "./Toggle";
 import { Button } from "../../../ui/button";
-import { Banana } from "lucide-react";
+import { Clover } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "../../../../lib/utils";
 import MenuLink from "../MenuLink";
@@ -35,7 +35,7 @@ const Sidebar = () => {
        to="/"
        className="flex justify-start items-center hover:opacity-85 transition-opacity duration-300"
       >
-       <Banana className="w-6 h-6 mr-3" />
+       <Clover className="w-6 h-6 mr-3" />
        <span
         className={cn(
          "font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300",
