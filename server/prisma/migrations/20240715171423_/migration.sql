@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "articleLimit" DROP NOT NULL,
+ALTER COLUMN "articleLimit" SET DEFAULT 0,
+ALTER COLUMN "resetDailyLimit" DROP NOT NULL,
+ALTER COLUMN "videoLimit" DROP NOT NULL,
+ALTER COLUMN "videoLimit" SET DEFAULT 0;

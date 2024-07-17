@@ -29,9 +29,9 @@ const userService = {
         }
     },
 
-    async createInitialUserDailyLimit(email) {
+    async createInitialUserDailyLimit(email, limit) {
         try {
-            const user = await User.initialDailyLimit(email, 0, 0, new Date());
+            const user = await User.initialDailyLimit(email, limit, limit, new Date());
 
             return user;
         } catch (error) {

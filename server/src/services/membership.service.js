@@ -39,6 +39,25 @@ const membershipService = {
             throw new Error(error.message);
         }
     },
+
+    async decrementUserArticleLimit(email) {
+        try {
+            const user = await User.decrementArticleLimit(email);
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+
+    async decrementUserVideoLimit(email) {
+        try {
+            const user = await User.decrementVideoLimit(email);
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+
 };
 
 module.exports = membershipService;

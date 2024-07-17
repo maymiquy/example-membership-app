@@ -8,14 +8,17 @@ datasource db {
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
-  name           String
-  email          String   @unique
-  password       String
-  stripeId       String   @unique
-  membershipType String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id              Int       @id @default(autoincrement())
+  name            String
+  email           String    @unique
+  password        String
+  stripeId        String    @unique
+  membershipType  String?
+  articleLimit    Int?      @default(0)
+  videoLimit      Int?      @default(0)
+  resetDailyLimit DateTime? @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Article {
@@ -24,6 +27,7 @@ model Article {
   body        String
   imgUrl      String
   releaseDate DateTime @default(now())
+  type        String
 }
 
 model Video {
@@ -33,4 +37,5 @@ model Video {
   thumbnailUrl String
   videoUrl     String?
   uploadDate   DateTime @default(now())
+  type         String
 }

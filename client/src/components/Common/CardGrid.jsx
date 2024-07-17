@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
  Card,
  CardContent,
@@ -7,11 +7,17 @@ import {
  CardHeader,
  CardTitle,
 } from "../ui/card";
-import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
+import { MembershipContext } from "../../context/MembershipContext";
 
 const CardGrid = (props) => {
+ const { handleMembershipAccess } = useContext(MembershipContext);
+
+ const handleClick = () => {
+  handleMembershipAccess(!!props.thumbnailUrl, props.href);
+ };
+
  return (
   <Card className="w-full md:max-w-64 shadow-md rounded-lg border my-1 md:my-2">
    <div className="relative h-40">
@@ -35,14 +41,12 @@ const CardGrid = (props) => {
     </CardDescription>
    </CardContent>
    <CardFooter className="relative bottom-0 px-6 my-4">
-    <Link to={props.href}>
-     <Button
-      className="w-full font-semibold text-md md:text-md"
-      onClick={() => {}}
-     >
-      {!props.thumbnailUrl ? "Read" : "Watch"}
-     </Button>
-    </Link>
+    <Button
+     className="w-full font-semibold text-md md:text-md"
+     onClick={handleClick}
+    >
+     {!props.thumbnailUrl ? "Read" : "Watch"}
+    </Button>
    </CardFooter>
   </Card>
  );

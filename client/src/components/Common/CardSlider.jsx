@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
 import { Button } from "../ui/button";
 import {
  Card,
@@ -10,8 +9,14 @@ import {
  CardTitle,
 } from "../ui/card";
 import { Badge } from "../ui/badge";
+import { MembershipContext } from "../../context/MembershipContext";
 
 const CardSlider = (props) => {
+ const { handleMembershipAccess } = useContext(MembershipContext);
+
+ const handleClick = () => {
+  handleMembershipAccess(!!props.thumbnailUrl, props.href);
+ };
  return (
   <>
    <Card className="min-w-full md:min-w-72 shadow-md rounded-lg border my-1 md:my-2">
@@ -36,14 +41,12 @@ const CardSlider = (props) => {
      </CardDescription>
     </CardContent>
     <CardFooter className="relative bottom-0 px-6 my-4">
-     <Link to={props.href}>
-      <Button
-       className="w-full font-semibold text-md md:text-md"
-       onClick={() => {}}
-      >
-       {!props.thumbnailUrl ? "Read" : "Watch"}
-      </Button>
-     </Link>
+     <Button
+      className="w-full font-semibold text-md md:text-md"
+      onClick={handleClick}
+     >
+      {!props.thumbnailUrl ? "Read" : "Watch"}
+     </Button>
     </CardFooter>
    </Card>
   </>

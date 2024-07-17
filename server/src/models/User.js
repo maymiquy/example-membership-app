@@ -69,6 +69,38 @@ class User {
             throw new Error(error.message);
         }
     }
+
+    static async decrementArticleLimit(email) {
+        try {
+            const user = await prisma.user.update({
+                where: { email: email },
+                data: {
+                    articleLimit: {
+                        decrement: 1,
+                    },
+                },
+            });
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    static async decrementVideoLimit(email) {
+        try {
+            const user = await prisma.user.update({
+                where: { email: email },
+                data: {
+                    videoLimit: {
+                        decrement: 1,
+                    },
+                },
+            });
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }
 
 module.exports = User;

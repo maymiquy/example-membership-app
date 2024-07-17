@@ -36,16 +36,20 @@ const membershipController = {
 
             if (session.payment_status === 'paid') {
                 let membershipType;
+                let limit;
                 if (session.amount_total === 900000) {
                     membershipType = 'Basic';
+                    limit = 3;
                 } else if (session.amount_total === 1900000) {
                     membershipType = 'Premium';
+                    limit = 10;
                 } else if (session.amount_total === 2900000) {
                     membershipType = 'Platinum';
+                    limit = Infinity;
                 }
 
                 await userService.updateUserMembership(email, membershipType);
-                await userService.createInitialUserDailyLimit(email);
+                await userService.createInitialUserDailyLimit(email, limit);
 
                 res.status(200).json({ message: 'Success' });
             } else {
@@ -54,7 +58,31 @@ const membershipController = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    }
+    },
+
+    async decrementUserArticleLimit(req, res) {
+        try {
+            await authGuard(req, res, async () => {
+                const { email } = req.user;
+                const data = await membershipService.decrementUserArticleLimit(email);
+                res.status(200).json({ data: data });
+            });
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    },
+
+    async decrementUserVideoLimit(req, res) {
+        try {
+            await authGuard(req, res, async () => {
+                const { email } = req.user;
+                const data = await membershipService.decrementUserVideoLimit(email);
+                res.status(200).json({ data: data });
+            });
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    },
 };
 
 module.exports = membershipController;

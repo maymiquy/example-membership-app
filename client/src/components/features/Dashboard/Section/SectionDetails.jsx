@@ -16,14 +16,19 @@ const SectionDetails = (props) => {
  const splitTextIntoParagraphs = (text) => {
   const paragraphs = text.split(/[\n]+/);
   return paragraphs.map((paragraph, index) => (
-   <p
+   <CardDescription
     key={index}
-    className={cn("text-gray-700", "leading-relaxed", "mb-4", {
-     "indent-8": index === 0 && paragraphs.length > 1,
-    })}
+    className={cn(
+     "text-gray-700 text-sm md:text-md",
+     "leading-relaxed",
+     "mb-4",
+     {
+      "indent-8": index === 0 && paragraphs.length > 1,
+     },
+    )}
    >
     {paragraph.trim()}
-   </p>
+   </CardDescription>
   ));
  };
 
@@ -31,16 +36,14 @@ const SectionDetails = (props) => {
   <Container>
    <Card className="w-full bg-transparent">
     <CardHeader>
-     <CardTitle>
-      <h1 className="text-2xl">{props.title}</h1>
-     </CardTitle>
+     <CardTitle className="text-2xl font-semibold">{props.title}</CardTitle>
     </CardHeader>
     <CardContent>
      {props.imgUrl && (
       <img
        src={props.imgUrl}
        alt={props.title}
-       className="rounded-lg mb-4 w-1/2"
+       className="rounded-lg mb-4 w-full md:w-1/2"
       />
      )}
      {props.videoUrl && (
@@ -71,9 +74,7 @@ const SectionDetails = (props) => {
        </div>
       </div>
      )}
-     <CardDescription className="text-md">
-      {splitTextIntoParagraphs(props.body)}
-     </CardDescription>
+     <>{splitTextIntoParagraphs(props.body)}</>
     </CardContent>
     <CardFooter>
      <Badge>Published on {props.date}</Badge>

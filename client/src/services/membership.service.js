@@ -37,4 +37,24 @@ const postSuccessCheckout = async (sessionId) => {
     }
 };
 
-export { fetchMembership, postSubscription, postSuccessCheckout };
+const countUserArticleLimit = async (email) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/limit/article?email=${email}`);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+const countUserVideoLimit = async (email) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/limit/video?email=${email}`);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+
+
+export { fetchMembership, postSubscription, postSuccessCheckout, countUserArticleLimit, countUserVideoLimit };
