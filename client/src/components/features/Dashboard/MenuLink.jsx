@@ -106,8 +106,8 @@ const MenuLink = ({ isOpen }) => {
             const res = await logout();
             if (res.status === 200) window.location.reload();
            }}
-           variant="destructive"
-           className="w-full justify-center h-10 mt-5"
+           variant="outline"
+           className="w-full justify-center h-10 my-5 hover:outline hover:outline-1 hover:outline-red-500"
           >
            <span className={cn(isOpen === false ? "" : "mr-4")}>
             <LogOut size={18} />

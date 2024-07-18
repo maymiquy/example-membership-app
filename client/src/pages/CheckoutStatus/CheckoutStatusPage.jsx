@@ -17,7 +17,7 @@ const CheckoutStatusPage = ({ sessionId }) => {
     }
    };
    updatedSucceesSession();
-  }, 500);
+  }, 700);
 
   const redirectTimeout = setTimeout(() => {
    if (error) {

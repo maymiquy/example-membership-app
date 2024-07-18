@@ -34,8 +34,10 @@ const CheckoutStatus = (props) => {
     <CardDescription className="text-[10px] text-center text-gray-600">
      You will be redirected to the{" "}
      {props.error ? "subscription page" : "dashboard page"} in{" "}
-     {props.timeRemaining} second
-     {props.timeRemaining !== 1 ? "s" : ""}.
+     <b className="font-bold text-yellow-500 text-[15px]">
+      {props.timeRemaining}
+     </b>{" "}
+     second
     </CardDescription>
     <CardFooter className="flex justify-end mt-4">
      <Button
