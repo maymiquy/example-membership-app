@@ -29,9 +29,6 @@ const LoginModal = () => {
  const handleLogin = async () => {
   try {
    const response = await regularLogin(formLogin.email, formLogin.password);
-
-   console.log(response.data);
-
    const { token } = response.data;
 
    localStorage.setItem("authToken", token);

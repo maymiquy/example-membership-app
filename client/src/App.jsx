@@ -3,14 +3,14 @@ import { Route, Routes, useSearchParams } from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import ProtectedRoute from "./ProtectedRoutes";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
-import { UserContext } from "./context/userContext";
+import { UserContext } from "./context/UserContext";
 import ArticlesPage from "./pages/Dashboard/Articles/ArticlesPage";
 import VideosPage from "./pages/Dashboard/Videos/VideosPage";
 import DetailsPage from "./pages/Dashboard/Details/DetailsPage";
 import CheckoutStatusPage from "./pages/CheckoutStatus/CheckoutStatusPage";
 
 function App() {
- const { user, loading, error } = useContext(UserContext);
+ const { user, loading } = useContext(UserContext);
  const GetCheckoutStatusParams = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");

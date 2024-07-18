@@ -3,7 +3,7 @@ import { Button } from "../../../ui/button";
 import { GrGoogle } from "react-icons/gr";
 import { useGoogleLogin } from "@react-oauth/google";
 import { oauthGoogle, storeToken } from "../../../../services/auth.service";
-import { UserContext } from "../../../../context/userContext";
+import { UserContext } from "../../../../context/UserContext";
 import { toast } from "../../../ui/use-toast";
 
 const GoogleLogin = () => {
