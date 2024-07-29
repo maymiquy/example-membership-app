@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button } from "../../../ui/button";
 import { GrGoogle } from "react-icons/gr";
 import { useGoogleLogin } from "@react-oauth/google";
 import { oauthGoogle, storeToken } from "../../../../services/auth.service";
-import { UserContext } from "../../../../context/UserContext";
 import { toast } from "../../../ui/use-toast";
+import { useUserContext } from "../../../../hooks/useUserContext";
 
 const GoogleLogin = () => {
- const { setUser } = useContext(UserContext);
+ const { setUser } = useUserContext();
 
  const handleGoogleLogin = useGoogleLogin({
   onSuccess: async (tokenResponse) => {

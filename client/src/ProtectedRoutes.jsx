@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { UserContext } from "./context/UserContext";
+import { useUserContext } from "./hooks/useUserContext";
 
 const ProtectedRoute = () => {
- const { user } = useContext(UserContext);
+ const { user } = useUserContext();
 
  return user ? <Outlet /> : <Navigate to="/" />;
 };

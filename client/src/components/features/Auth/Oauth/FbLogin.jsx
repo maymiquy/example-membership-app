@@ -1,13 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
-import { UserContext } from "../../../../context/UserContext";
 import { oauthFacebook, storeToken } from "../../../../services/auth.service";
 import { Button } from "../../../ui/button";
 import { SiFacebook } from "react-icons/si";
 import { toast } from "../../../ui/use-toast";
+import { useUserContext } from "../../../../hooks/useUserContext";
 
 const FbLogin = () => {
- const { setUser } = useContext(UserContext);
+ const { setUser } = useUserContext();
  const [isError, setIsError] = useState(false);
 
  const handleFacebookLogin = async (response) => {
