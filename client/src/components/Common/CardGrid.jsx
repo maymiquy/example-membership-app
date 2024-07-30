@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
  Card,
  CardContent,
@@ -9,10 +9,10 @@ import {
 } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { MembershipContext } from "../../context/MembershipContext";
+import { useMembershipContext } from "../../hooks/useMembershipContext";
 
 const CardGrid = (props) => {
- const { handleMembershipAccess } = useContext(MembershipContext);
+ const { handleMembershipAccess } = useMembershipContext();
 
  const handleClick = () => {
   handleMembershipAccess(!!props.thumbnailUrl, props.href);

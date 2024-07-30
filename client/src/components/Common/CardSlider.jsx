@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button } from "../ui/button";
 import {
  Card,
@@ -9,10 +9,10 @@ import {
  CardTitle,
 } from "../ui/card";
 import { Badge } from "../ui/badge";
-import { MembershipContext } from "../../context/MembershipContext";
+import { useMembershipContext } from "../../hooks/useMembershipContext";
 
 const CardSlider = (props) => {
- const { handleMembershipAccess } = useContext(MembershipContext);
+ const { handleMembershipAccess } = useMembershipContext();
 
  const handleClick = () => {
   handleMembershipAccess(!!props.thumbnailUrl, props.href);
