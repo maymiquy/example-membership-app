@@ -11,7 +11,7 @@ const { dailyResetScheduler } = require('./middlewares/scheduler.middleware');
 
 app.use(express.json());
 app.use(cors());
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(morgan('dev'));
 
 app.use('/api', routes);
@@ -29,3 +29,5 @@ const host = process.env.HOST;
 app.listen(port, () => {
     console.log(`Server is running on http://${host}:${port}`);
 });
+
+module.exports = app;
