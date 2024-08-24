@@ -26,6 +26,7 @@ const WelcomePage = (props) => {
     setLoading(false);
    } catch (error) {
     setMembership([]);
+    setLoading(false);
     throw new Error(error.message);
    }
   })();
