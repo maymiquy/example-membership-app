@@ -9,7 +9,7 @@ const storeToken = async (token) => {
 };
 
 const regularLogin = async (email, password) => {
-    const data = await axios.post("http://localhost:5000/api/login", {
+    const data = await axios.post("https://example-membership-api.vercel.app/api/login", {
         email,
         password,
     });
@@ -18,7 +18,7 @@ const regularLogin = async (email, password) => {
 }
 
 const regularRegister = async (name, email, password) => {
-    const data = await axios.post("http://localhost:5000/api/register", {
+    const data = await axios.post("https://example-membership-api.vercel.app/api/register", {
         name,
         email,
         password,
@@ -29,7 +29,7 @@ const regularRegister = async (name, email, password) => {
 
 const oauthFacebook = async (accessToken) => {
     try {
-        const data = await axios.post("http://localhost:5000/api/oauth/fb", {
+        const data = await axios.post("https://example-membership-api.vercel.app/api/oauth/fb", {
             accessToken,
         });
         return data;
@@ -40,7 +40,7 @@ const oauthFacebook = async (accessToken) => {
 
 const oauthGoogle = async (accessToken) => {
     try {
-        const response = await axios.post("http://localhost:5000/api/oauth/google", {
+        const response = await axios.post("https://example-membership-api.vercel.app/api/oauth/google", {
             accessToken,
         });
         return response.data;
@@ -51,7 +51,7 @@ const oauthGoogle = async (accessToken) => {
 
 const logout = async () => {
     try {
-        const data = await axios.post("http://localhost:5000/api/logout");
+        const data = await axios.post("https://example-membership-api.vercel.app/api/logout");
         return data;
     } catch (error) {
         throw new Error(error.message);

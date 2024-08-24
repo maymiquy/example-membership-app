@@ -2,7 +2,7 @@ import axios from "axios";
 
 const fetchContents = async () => {
     try {
-        const response = await axios.get("http://localhost:5000/api/contents");
+        const response = await axios.get("https://example-membership-api.vercel.app/api/contents");
         return response.data;
     } catch (error) {
         throw new Error(error.message);
@@ -11,7 +11,7 @@ const fetchContents = async () => {
 
 const fetchSingleArticle = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/contents/article/${id}`);
+        const response = await axios.get(`https://example-membership-api.vercel.app/api/contents/article/${id}`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);
@@ -20,7 +20,7 @@ const fetchSingleArticle = async (id) => {
 
 const fetchSingleVideo = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/contents/video/${id}`);
+        const response = await axios.get(`https://example-membership-api.vercel.app/api/contents/video/${id}`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);

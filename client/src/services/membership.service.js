@@ -2,7 +2,7 @@ import axios from "axios";
 
 const fetchMembership = async () => {
     try {
-        const response = await axios.get("http://127.0.0.1:5000/api/pricing");
+        const response = await axios.get("https://example-membership-api.vercel.app/api/pricing");
         const { data } = response.data;
 
         return data;
@@ -13,7 +13,7 @@ const fetchMembership = async () => {
 
 const postSubscription = async (priceId) => {
     try {
-        const response = await axios.post("http://127.0.0.1:5000/api/subscribe", {
+        const response = await axios.post("https://example-membership-api.vercel.app/api/subscribe", {
             priceId,
         });
         const { data } = response.data;
@@ -27,7 +27,7 @@ const postSubscription = async (priceId) => {
 const postSuccessCheckout = async (sessionId) => {
     try {
         const response = await axios.get(
-            `http://localhost:5000/api/checkout/success?session_id=${sessionId}`,
+            `https://example-membership-api.vercel.app/api/checkout/success?session_id=${sessionId}`,
         );
         const { data } = response.data;
         console.log("success checkout service :", data);
@@ -39,7 +39,7 @@ const postSuccessCheckout = async (sessionId) => {
 
 const countUserArticleLimit = async (email) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/limit/article?email=${email}`);
+        const response = await axios.get(`https://example-membership-api.vercel.app/api/limit/article?email=${email}`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);
@@ -48,7 +48,7 @@ const countUserArticleLimit = async (email) => {
 
 const countUserVideoLimit = async (email) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/limit/video?email=${email}`);
+        const response = await axios.get(`https://example-membership-api.vercel.app/api/limit/video?email=${email}`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);
