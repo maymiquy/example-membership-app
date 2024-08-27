@@ -56,7 +56,7 @@ export const MembershipProvider = ({ children }) => {
 
  const handleMembershipAccess = (isThumbnail, href) => {
   if (isThumbnail) {
-   if (videoCount == 0) {
+   if (videoCount <= 0) {
     toast({
      title: "You have reached your video access daily limit.",
      description: `Your video daily limit: ${
@@ -72,7 +72,7 @@ export const MembershipProvider = ({ children }) => {
    }
    limitVideoCount();
   } else {
-   if (articleCount == 0) {
+   if (articleCount <= 0) {
     toast({
      title: "You have reached your article access daily limit.",
      description: `Your article daily limit: ${
