@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "../components/ui/use-toast";
 import {
@@ -36,23 +36,23 @@ export const MembershipProvider = ({ children }) => {
   fetchUserData();
  }, [navigate]);
 
- const limitArticleCount = useCallback(async () => {
+ const limitArticleCount = async () => {
   try {
    await countUserArticleLimit(userEmail);
    setArticleCount((prevCount) => prevCount - 1);
   } catch (error) {
    console.error("Error incrementing user article limit:", error);
   }
- }, [userEmail]);
+ };
 
- const limitVideoCount = useCallback(async () => {
+ const limitVideoCount = async () => {
   try {
    await countUserVideoLimit(userEmail);
    setVideoCount((prevCount) => prevCount - 1);
   } catch (error) {
    console.error("Error incrementing user video limit:", error);
   }
- }, [userEmail]);
+ };
 
  const handleMembershipAccess = (isThumbnail, href) => {
   if (isThumbnail) {

@@ -11,8 +11,10 @@ import {
 } from "../services/membership.service";
 import Authentication from "../components/features/Auth/Authentication";
 import Pricing from "../components/features/Guest/Pricing/Pricing";
+import { useNavigate } from "react-router-dom";
 
 const WelcomePage = (props) => {
+ const navigate = useNavigate();
  const [membership, setMembership] = useState([]);
  const [loading, setLoading] = useState(true);
 
@@ -57,6 +59,8 @@ const WelcomePage = (props) => {
     )
    ) : loading ? (
     <Spinner size="large" />
+   ) : props.user.membershipType ? (
+    (window.location.href = "/dashboard")
    ) : (
     <Pricing
      className={`${loading ? "hidden" : ""}`}
