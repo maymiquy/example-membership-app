@@ -32,7 +32,7 @@ const Sidebar = () => {
       asChild
      >
       <Link
-       to="/"
+       to="/dashboard"
        className="flex justify-start items-center hover:opacity-85 transition-opacity duration-300"
       >
        <Clover className="w-6 h-6 mr-3" />

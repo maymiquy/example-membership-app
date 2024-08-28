@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Banana, MenuIcon } from "lucide-react";
+import { Clover, MenuIcon } from "lucide-react";
 
 import {
  Dialog,
@@ -30,10 +30,10 @@ const DialogMenu = () => {
        asChild
       >
        <Link
-        href="/"
+        href="/dashboard"
         className="flex justify-start items-center hover:opacity-85 transition-opacity duration-300"
        >
-        <Banana className="w-6 h-6 mr-3" />
+        <Clover className="w-6 h-6 mr-3" />
         <span className="font-bold">Example App</span>
        </Link>
       </Button>

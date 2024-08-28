@@ -18,11 +18,13 @@ export const UserProvider = ({ children }) => {
  useEffect(() => {
   (async () => {
    try {
+    let userPath;
     const user = await fetchMe();
     setUser(user);
     setLoading(false);
     setError(null);
-    user.membershipType && navigate("/dashboard");
+    user.membershipType ? (userPath = "/dashboard") : (userPath = "/");
+    navigate(userPath);
    } catch (error) {
     setUser(null);
     setLoading(false);
