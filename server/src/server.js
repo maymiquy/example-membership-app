@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(morgan('dev'));
+app.use(dailyResetScheduler());
 
 app.use('/api', routes);
 app.use('/', (req, res) => {
@@ -22,7 +23,6 @@ app.use('/', (req, res) => {
     });
 });
 
-dailyResetScheduler();
 
 const port = process.env.PORT;
 const host = process.env.HOST;
