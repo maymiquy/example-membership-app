@@ -13,8 +13,10 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { regularLogin, storeToken } from "../../../../services/auth.service";
 import { useToast } from "../../../ui/use-toast";
+import Spinner from "../../../common/Spinner";
 
 const LoginModal = () => {
+ const [loading, setLoading] = useState(false);
  const [formLogin, setFormLogin] = useState({
   email: "",
   password: "",
@@ -30,10 +32,10 @@ const LoginModal = () => {
   try {
    const response = await regularLogin(formLogin.email, formLogin.password);
    const { token } = response.data;
-
    localStorage.setItem("authToken", token);
    if (token) storeToken(token);
 
+   setLoading(false);
    setIsOpen(false);
 
    toast({
@@ -54,8 +56,8 @@ const LoginModal = () => {
    });
   } catch (error) {
    console.error("Login failed:", error);
-
    setIsOpen(true);
+   setLoading(false);
    const messageError = error.response.data;
 
    toast({
@@ -90,6 +92,13 @@ const LoginModal = () => {
   });
  };
 
+ const handleKeyDown = (e) => {
+  if (e.key === "Enter" && !loading) {
+   setLoading(true);
+   handleLogin();
+  }
+ };
+
  return (
   <Dialog open={isOpen} onOpenChange={setIsOpen}>
    <DialogTrigger asChild>
@@ -111,6 +120,7 @@ const LoginModal = () => {
        placeholder="name@example.com"
        value={formLogin.email}
        onChange={handleInputChange}
+       onKeyDown={handleKeyDown}
       />
       {error.email && (
        <p className="text-red-500 text-xs truncate">{error.email}</p>
@@ -124,13 +134,19 @@ const LoginModal = () => {
        placeholder="*******"
        value={formLogin.password}
        onChange={handleInputChange}
+       onKeyDown={handleKeyDown}
       />
       {error.password && (
        <p className="text-red-500 text-xs truncate">{error.password}</p>
       )}
      </div>
-     <Button variant="default" onClick={handleLogin}>
-      Login
+     <Button
+      disabled={loading}
+      loading={loading}
+      variant="default"
+      onClick={handleLogin}
+     >
+      {loading ? <Spinner size="small" /> : "Login"}
      </Button>
     </div>
     <DialogFooter className="items-center justify-center"></DialogFooter>
