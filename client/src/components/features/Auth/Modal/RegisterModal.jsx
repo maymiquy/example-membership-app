@@ -16,8 +16,10 @@ import { Input } from "../../../ui/input";
 import { Label } from "../../../ui/label";
 import { Button } from "../../../ui/button";
 import { useToast } from "../../../ui/use-toast";
+import Spinner from "../../../common/Spinner";
 
 const RegisterModal = () => {
+ const [loading, setLoading] = useState(false);
  const [formRegister, setFormRegister] = useState({
   name: "",
   email: "",
@@ -32,12 +34,14 @@ const RegisterModal = () => {
 
  const handleRegister = async () => {
   try {
+   setLoading(true);
    await regularRegister(
     formRegister.name,
     formRegister.email,
     formRegister.password,
    );
 
+   setLoading(false);
    setIsOpen(false);
 
    toast({
@@ -54,8 +58,10 @@ const RegisterModal = () => {
     password: "",
    });
   } catch (error) {
+   setLoading(true);
    console.error("Registration failed:", error);
 
+   setLoading(false);
    setIsOpen(true);
    const messageError = error.response.data;
    toast({
@@ -90,6 +96,13 @@ const RegisterModal = () => {
   });
  };
 
+ const handleKeyDown = (e) => {
+  if (e.key === "Enter" && !loading) {
+   setLoading(true);
+   handleRegister();
+  }
+ };
+
  return (
   <Dialog open={isOpen} onOpenChange={setIsOpen}>
    <DialogTrigger asChild>
@@ -112,6 +125,7 @@ const RegisterModal = () => {
        type="text"
        placeholder="Your Name"
        value={formRegister.name}
+       onKeyDown={handleKeyDown}
        onChange={handleInputChange}
       />
      </div>
@@ -122,6 +136,7 @@ const RegisterModal = () => {
        type="email"
        placeholder="name@example.com"
        value={formRegister.email}
+       onKeyDown={handleKeyDown}
        onChange={handleInputChange}
        error={error.email}
       />
@@ -136,6 +151,7 @@ const RegisterModal = () => {
        type="password"
        placeholder="*******"
        value={formRegister.password}
+       onKeyDown={handleKeyDown}
        onChange={handleInputChange}
        error={error.password}
       />
@@ -143,8 +159,13 @@ const RegisterModal = () => {
        <p className="text-red-500 text-xs truncate">{error.password}</p>
       )}
      </div>
-     <Button variant="default" onClick={handleRegister}>
-      Register
+     <Button
+      disabled={loading}
+      loading={loading}
+      variant="default"
+      onClick={handleRegister}
+     >
+      {loading ? <Spinner size="small" /> : "Register"}
      </Button>
     </div>
     <DialogFooter className="items-center justify-center"></DialogFooter>
