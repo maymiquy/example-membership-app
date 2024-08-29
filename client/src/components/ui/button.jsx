@@ -43,9 +43,10 @@ const Button = React.forwardRef(
    <Comp
     className={cn(
      buttonVariants({ variant, size }),
-     `${loading && "cursor-not-allowed bg-zinc-500"}`,
+     `${loading && "cursor-not-allowed bg-zinc-200"}`,
      className,
     )}
+    disabled={loading}
     ref={ref}
     {...props}
    />
