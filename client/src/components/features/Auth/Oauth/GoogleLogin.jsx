@@ -26,6 +26,13 @@ const GoogleLogin = () => {
    } catch (error) {
     console.error("Error during google login:", error.message);
     setLoading(false);
+    toast({
+     title: "Login Failed",
+     description: messageError.error || messageError.errors[0].msg,
+     variant: "destructive",
+    });
+   } finally {
+    setLoading(false);
    }
   },
   onError: (error) => {
@@ -40,6 +47,11 @@ const GoogleLogin = () => {
   },
   onNonOAuthError: () => {
    setLoading(false);
+   toast({
+    title: "Login Failed",
+    description: "Login with Google has canceled",
+    variant: "destructive",
+   });
   },
  });
 
@@ -58,9 +70,7 @@ const GoogleLogin = () => {
    disabled={loading}
    loading={loading}
    variant="outline"
-   className={`w-[170px] flex flex-row ${
-    loading ? "justify-center" : "justify-start"
-   } `}
+   className={`w-[160px] flex flex-row justify-center`}
    onClick={handleClick}
    asChild
   >
@@ -72,7 +82,6 @@ const GoogleLogin = () => {
     ) : (
      <>
       <GrGoogle size="18px" />
-      Login Google
      </>
     )}
    </span>
