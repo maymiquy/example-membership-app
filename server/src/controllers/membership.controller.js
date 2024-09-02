@@ -83,6 +83,18 @@ const membershipController = {
             res.status(400).json({ message: error.message });
         }
     },
+
+    async resetDailyLimit(req, res) {
+        try {
+            const result = await membershipService.resetDailyLimit();
+            res.status(200);
+            console.log('Daily limit reset completed at:', new Date().toLocaleString());
+            console.log('Reset result:', result);
+        } catch (error) {
+            console.error('Error resetting daily limit:', error);
+            res.status(400).json({ message: 'Error resetting daily limit' });
+        }
+    }
 };
 
 module.exports = membershipController;

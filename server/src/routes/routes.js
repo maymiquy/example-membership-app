@@ -67,4 +67,6 @@ router.post('/subscribe', membershipController.subscribe);
 router.get('/checkout/success', membershipController.checkoutSuccess);
 router.get('/limit/article', membershipController.decrementUserArticleLimit);
 router.get('/limit/video', membershipController.decrementUserVideoLimit);
+router.get('/limit/reset', membershipController.resetDailyLimit);
+
 module.exports = router;

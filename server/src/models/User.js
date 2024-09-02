@@ -107,13 +107,7 @@ class User {
             console.log('Attempting to reset daily limits...');
 
             // Fetch all users that need reset
-            const usersToReset = await prisma.user.findMany({
-                where: {
-                    resetDailyLimit: {
-                        lte: new Date()
-                    }
-                }
-            });
+            const usersToReset = await prisma.user.findMany();
 
             // Update each user individually
             const updatePromises = usersToReset.map(user => {
@@ -138,7 +132,7 @@ class User {
                     data: {
                         articleLimit: newArticleLimit,
                         videoLimit: newVideoLimit,
-                        resetDailyLimit: new Date(new Date().setHours(24, 0, 0, 0))
+                        resetDailyLimit: new Date()
                     }
                 });
             });
