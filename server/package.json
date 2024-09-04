@@ -28,8 +28,8 @@
   "jsonwebtoken": "^9.0.2",
   "node-cron": "^3.0.3",
   "prisma": "^5.15.0",
-  "stripe": "^15.11.0",
-  "uuid": "^10.0.0"
+  "uuid": "^10.0.0",
+  "xendit-node": "^6.0.0"
  },
  "devDependencies": {
   "morgan": "^1.10.0",
