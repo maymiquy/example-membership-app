@@ -17,20 +17,18 @@ const postSubscription = async (priceId) => {
             priceId,
         });
         const { data } = response.data;
-        console.log("success subs service :", data);
         return data;
     } catch (error) {
         throw new Error(error.message);
     }
 };
 
-const postSuccessCheckout = async (sessionId) => {
+const postSuccessCheckout = async (invoice_id) => {
     try {
-        const response = await axios.get(
-            `https://example-membership-api.vercel.app/api/checkout/success?session_id=${sessionId}`,
-        );
+        const response = await axios.post(`https://example-membership-api.vercel.app/api/checkout/success`, {
+            invoice_id
+        });
         const { data } = response.data;
-        console.log("success checkout service :", data);
         return data;
     } catch (error) {
         throw new Error(error.message);

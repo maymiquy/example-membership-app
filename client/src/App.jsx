@@ -11,17 +11,11 @@ import { useUserContext } from "./hooks/useUserContext";
 
 function App() {
  const { user, loading } = useUserContext();
- const GetCheckoutStatusParams = () => {
-  const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get("session_id");
-
-  return <CheckoutStatusPage sessionId={sessionId} />;
- };
 
  return (
   <Routes>
    <Route path="/" element={<WelcomePage user={user} />} />
-   <Route path="/checkout/status" element={<GetCheckoutStatusParams />} />
+   <Route path="/checkout/status" element={<CheckoutStatusPage />} />
    <Route element={<ProtectedRoute />}>
     <Route
      path="/dashboard"

@@ -57,9 +57,9 @@ const Pricing = (props) => {
   >
    {props.membership.map((item, index) => {
     let membershipName;
-    if (item.unit_amount === 2900000) {
+    if (item.price === 29000) {
      membershipName = "Platinum";
-    } else if (item.unit_amount === 1900000) {
+    } else if (item.price === 19000) {
      membershipName = "Premium";
     } else {
      membershipName = "Basic";
@@ -70,7 +70,7 @@ const Pricing = (props) => {
      currency: "IDR",
      minimumFractionDigits: 2,
      maximumFractionDigits: 2,
-    }).format(item.unit_amount / 100);
+    }).format(item.price / 1);
 
     return (
      <Card key={index}>

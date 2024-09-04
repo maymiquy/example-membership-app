@@ -42,7 +42,10 @@ const WelcomePage = (props) => {
   try {
    const res = await postSubscription(priceId);
 
-   window.location.assign(res.url);
+   document.cookie = `invoice_id=${res.id}; expires=${new Date(
+    Date.now() + 15 * 60 * 1000,
+   )}; path=/`;
+   window.location.assign(res.invoiceUrl);
   } catch (error) {
    throw new Error(error.message);
   }
@@ -60,7 +63,7 @@ const WelcomePage = (props) => {
    ) : loading ? (
     <Spinner size="large" />
    ) : props.user.membershipType ? (
-    (window.location.href = "/dashboard")
+    navigate("/dashboard")
    ) : (
     <Pricing
      className={`${loading ? "hidden" : ""}`}
