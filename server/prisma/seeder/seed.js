@@ -41,6 +41,20 @@ async function main() {
     });
     const seederVideos = prisma.video.findMany();
     (seederVideos.length > 0) && console.log('Videos seeded successfully');;
+
+    const plans = [
+        ...Array.from({ length: 3 }, (_, i) => ({
+            id: uuidv4(),
+            name: `Plan ${i === 0 ? "Basic" : i === 1 ? "Premium" : "Platinum"}`,
+            description: `This is the description of Plan ${i === 0 ? "Basic" : i === 1 ? "Premium" : "Platinum"}.`,
+            price: i === 0 ? 9000 : i === 1 ? 19000 : 29000,
+        })),
+    ];
+    await prisma.plan.createMany({
+        data: plans,
+    })
+    const seederPlans = prisma.plan.findMany();
+    (seederPlans.length > 0) && console.log('Plans seeded successfully');;
 }
 
 
