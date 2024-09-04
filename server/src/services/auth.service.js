@@ -3,7 +3,6 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const stripe = require('../config/stripe.config');
 const axios = require('axios');
 
 
@@ -17,16 +16,7 @@ const authService = {
 
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const stripeCust = await stripe.customers.create(
-                {
-                    email,
-                },
-                {
-                    apiKey: process.env.STRIPE_SECRET_KEY
-                }
-            );
-
-            const newUser = await User.create(name, email, hashedPassword, stripeCust.id);
+            const newUser = await User.create(name, email, hashedPassword);
             return newUser;
         } catch (error) {
             throw new Error(error.message);
@@ -75,16 +65,7 @@ const authService = {
             if (!user) {
                 const hashedPassword = await bcrypt.hash(email, 10);
 
-                const stripeCust = await stripe.customers.create(
-                    {
-                        email,
-                    },
-                    {
-                        apiKey: process.env.STRIPE_SECRET_KEY
-                    }
-                );
-
-                user = await User.create(name, email, hashedPassword, stripeCust.id);
+                user = await User.create(name, email, hashedPassword);
             }
 
             const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
@@ -108,16 +89,7 @@ const authService = {
             if (!user) {
                 const hashedPassword = await bcrypt.hash(email, 10);
 
-                const stripeCust = await stripe.customers.create(
-                    {
-                        email,
-                    },
-                    {
-                        apiKey: process.env.STRIPE_SECRET_KEY
-                    }
-                );
-
-                const user = await User.create(name, email, hashedPassword, stripeCust.id);
+                const user = await User.create(name, email, hashedPassword);
 
                 const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
                     expiresIn: 360000,

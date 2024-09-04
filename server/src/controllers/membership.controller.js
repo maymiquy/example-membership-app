@@ -3,7 +3,7 @@ require('dotenv').config();
 const membershipService = require('../services/membership.service');
 const authGuard = require('../middlewares/authguard.middleware');
 const userService = require('../services/user.service');
-const stripe = require('../config/stripe.config');
+const xendit = require('../config/xendit.config');
 
 const membershipController = {
     async getMemberships(req, res) {
@@ -21,6 +21,8 @@ const membershipController = {
                 const { email } = req.user;
                 const { priceId } = req.body;
                 const data = await membershipService.successSubscribe(email, priceId);
+
+                res.cookie('invoice_id', data.id, { maxAge: 15 * 60 * 1000 });
                 res.status(200).json({ data: data });
             });
         } catch (error) {
@@ -30,22 +32,28 @@ const membershipController = {
 
     async checkoutSuccess(req, res) {
         try {
-            const { session_id } = req.query;
-            const session = await stripe.checkout.sessions.retrieve(session_id);
-            const { email } = session.customer_details;
+            const { invoice_id } = req.body;
 
-            if (session.payment_status === 'paid') {
+            const { Invoice } = xendit;
+            const invoice = await Invoice.getInvoiceById({
+                invoiceId: invoice_id,
+            });
+            console.log(invoice);
+
+            if (invoice.status === 'PAID') {
+                const email = invoice.payerEmail;
                 let membershipType;
                 let limit;
-                if (session.amount_total === 900000) {
+
+                if (invoice.amount === 9000) {
                     membershipType = 'Basic';
                     limit = 3;
-                } else if (session.amount_total === 1900000) {
+                } else if (invoice.amount === 19000) {
                     membershipType = 'Premium';
                     limit = 10;
-                } else if (session.amount_total === 2900000) {
+                } else if (invoice.amount === 29000) {
                     membershipType = 'Platinum';
-                    limit = Infinity;
+                    limit = 999999;
                 }
 
                 await userService.updateUserMembership(email, membershipType);
