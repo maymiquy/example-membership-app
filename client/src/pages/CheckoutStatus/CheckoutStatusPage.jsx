@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { postSuccessCheckout } from "../../services/membership.service";
 import CheckoutStatus from "../../components/common/CheckoutStatus";
+import { getCookie } from "../../utils/getCookie";
 
-const CheckoutStatusPage = ({ sessionId }) => {
+const CheckoutStatusPage = () => {
  const [timeRemaining, setTimeRemaining] = useState(5);
  const [error, setError] = useState(false);
+ const invoice_id = getCookie("invoice_id");
 
  useEffect(() => {
   const requestTimeout = setTimeout(() => {
    const updatedSucceesSession = async () => {
     try {
-     await postSuccessCheckout(sessionId);
+     await postSuccessCheckout(invoice_id);
     } catch (err) {
      console.error("Error processing checkout success:", err);
      setError(true);
@@ -36,7 +38,7 @@ const CheckoutStatusPage = ({ sessionId }) => {
    clearTimeout(redirectTimeout);
    clearInterval(countdownInterval);
   };
- }, [sessionId, error]);
+ }, [invoice_id, error]);
 
  return (
   <div className="flex justify-center items-center h-screen bg-zinc-200">
