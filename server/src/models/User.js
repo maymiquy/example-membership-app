@@ -1,15 +1,14 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require("../config/prisma.config");
+
 
 class User {
-    static async create(name, email, password, stripeId) {
+    static async create(name, email, password) {
         try {
             const user = await prisma.user.create({
                 data: {
                     name,
                     email,
                     password,
-                    stripeId
                 },
             });
             return user;
@@ -122,9 +121,13 @@ class User {
                         newArticleLimit = 10;
                         newVideoLimit = 10;
                         break;
-                    default:
+                    case 'Platinum':
                         newArticleLimit = 999999;
                         newVideoLimit = 999999;
+                        break;
+                    default:
+                        newArticleLimit = null;
+                        newVideoLimit = null;
                 }
 
                 return prisma.user.update({
