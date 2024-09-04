@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -13,7 +12,6 @@ model User {
   name            String
   email           String    @unique
   password        String
-  stripeId        String    @unique
   membershipType  String?
   articleLimit    Int?      @default(0)
   videoLimit      Int?      @default(0)
@@ -39,4 +37,14 @@ model Video {
   videoUrl     String?
   uploadDate   DateTime @default(now())
   type         String
+}
+
+model Plan {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Int
+  interval    String   @default("month")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
