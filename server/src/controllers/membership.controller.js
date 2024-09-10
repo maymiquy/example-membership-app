@@ -41,7 +41,6 @@ const membershipController = {
                 const invoice = await Invoice.getInvoiceById({
                     invoiceId: invoice_id,
                 });
-                console.log(invoice);
 
                 if (invoice.status === 'PAID') {
                     const email = invoice.payerEmail;

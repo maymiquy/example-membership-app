@@ -4,6 +4,7 @@ import CheckoutStatus from "../../components/common/CheckoutStatus";
 import { getCookie } from "../../utils/getCookie";
 import cookies from "../../utils/cookies";
 
+
 const CheckoutStatusPage = () => {
  const [timeRemaining, setTimeRemaining] = useState(5);
  const [error, setError] = useState(false);
