@@ -12,6 +12,7 @@ import {
 import Authentication from "../components/features/Auth/Authentication";
 import Pricing from "../components/features/Guest/Pricing/Pricing";
 import { useNavigate } from "react-router-dom";
+import cookies from "../utils/cookies";
 
 const WelcomePage = (props) => {
  const navigate = useNavigate();
@@ -42,11 +43,13 @@ const WelcomePage = (props) => {
   try {
    const res = await postSubscription(priceId);
 
-   document.cookie = `invoice_id=${res.id}; expires=${new Date(
-    Date.now() + 15 * 60 * 1000,
-   )}; path=/`;
+   cookies.set("invoice_id", token, {
+    expires: new Date(new Date().getTime() + 15 * 60 * 1000),
+    path: "/",
+   });
    window.location.assign(res.invoiceUrl);
   } catch (error) {
+   cookies.remove("invoice_id");
    throw new Error(error.message);
   }
  };

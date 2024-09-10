@@ -21,8 +21,13 @@ import { Button } from "../../../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../ui/avatar";
 
 import { logout } from "../../../../services/auth.service";
+import { useUserContext } from "../../../../hooks/useUserContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "../../../ui/use-toast";
 
 const UserAvatar = (props) => {
+ const { setUser } = useUserContext();
+ const navigate = useNavigate();
  const userAvatar = `${props.user.name.charAt(0).toUpperCase()}${props.user.name
   .split(" ")
   [props.user.name.split(" ").length - 1].charAt(0)
@@ -85,9 +90,17 @@ const UserAvatar = (props) => {
      <DropdownMenuItem
       className="hover:cursor-pointer hover:bg-destructive"
       onClick={async () => {
-       localStorage.removeItem("authToken");
-       const res = await logout();
-       if (res.status === 200) window.location.reload();
+       try {
+        const res = await logout();
+        setUser(null);
+        if (res.status === 200) navigate("/");
+       } catch (error) {
+        throw new Error(error);
+       } finally {
+        toast({
+         title: `Logout Successfully`,
+        });
+       }
       }}
      >
       <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />

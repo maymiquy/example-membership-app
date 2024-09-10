@@ -1,4 +1,5 @@
 import axios from "axios";
+import cookies from "../utils/cookies";
 
 const storeToken = async (token) => {
     try {
@@ -9,16 +10,19 @@ const storeToken = async (token) => {
 };
 
 const regularLogin = async (email, password) => {
-    const data = await axios.post("https://example-membership-api.vercel.app/api/login", {
+    const res = await axios.post("https://example-membership.vercel.app/api/login", {
         email,
         password,
     });
 
-    return data;
+    const { token, message } = res.data;
+    cookies.set('authcookie', token, { expires: 1 / 24, path: '/' })
+
+    return message;
 }
 
 const regularRegister = async (name, email, password) => {
-    const data = await axios.post("https://example-membership-api.vercel.app/api/register", {
+    const data = await axios.post("https://example-membership.vercel.app/api/register", {
         name,
         email,
         password,
@@ -29,10 +33,14 @@ const regularRegister = async (name, email, password) => {
 
 const oauthFacebook = async (accessToken) => {
     try {
-        const data = await axios.post("https://example-membership-api.vercel.app/api/oauth/fb", {
+        const res = await axios.post("https://example-membership.vercel.app/api/oauth/fb", {
             accessToken,
         });
-        return data;
+
+        const { token, message } = res.data;
+        cookies.set('authcookie', token, { expires: 1 / 24, path: '/' })
+
+        return message;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -40,10 +48,13 @@ const oauthFacebook = async (accessToken) => {
 
 const oauthGoogle = async (accessToken) => {
     try {
-        const response = await axios.post("https://example-membership-api.vercel.app/api/oauth/google", {
+        const res = await axios.post("https://example-membership.vercel.app/api/oauth/google", {
             accessToken,
         });
-        return response.data;
+        const { token, message } = res.data;
+        cookies.set('authcookie', token, { expires: 1 / 24, path: '/' })
+
+        return message;
     } catch (error) {
         throw new Error(error.response?.data?.error || error.message);
     }
@@ -51,8 +62,9 @@ const oauthGoogle = async (accessToken) => {
 
 const logout = async () => {
     try {
-        const data = await axios.post("https://example-membership-api.vercel.app/api/logout");
-        return data;
+        const res = await axios.delete("https://example-membership.vercel.app/api/logout");
+        cookies.remove('authcookie');
+        return res;
     } catch (error) {
         throw new Error(error.message);
     }

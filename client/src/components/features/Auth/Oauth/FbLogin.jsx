@@ -17,7 +17,7 @@ const FbLogin = () => {
    const { accessToken } = response;
    const { data } = await oauthFacebook(accessToken);
    const { user, token } = data;
-   localStorage.setItem("authToken", token);
+
    if (token) storeToken(token);
    setUser(user);
 
@@ -34,6 +34,7 @@ const FbLogin = () => {
    });
   } finally {
    setIsLoading(false);
+   window.location.replace("/dashboard");
   }
  };
 

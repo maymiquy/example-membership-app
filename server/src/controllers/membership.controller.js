@@ -8,8 +8,10 @@ const xendit = require('../config/xendit.config');
 const membershipController = {
     async getMemberships(req, res) {
         try {
-            const data = await membershipService.membershipPricing();
-            res.status(200).json({ data: data });
+            await authGuard(req, res, async () => {
+                const data = await membershipService.membershipPricing();
+                res.status(200).json({ data: data });
+            })
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
@@ -32,37 +34,38 @@ const membershipController = {
 
     async checkoutSuccess(req, res) {
         try {
-            const { invoice_id } = req.body;
+            await authGuard(req, res, async () => {
+                const { invoice_id } = req.body;
 
-            const { Invoice } = xendit;
-            const invoice = await Invoice.getInvoiceById({
-                invoiceId: invoice_id,
-            });
-            console.log(invoice);
+                const { Invoice } = xendit;
+                const invoice = await Invoice.getInvoiceById({
+                    invoiceId: invoice_id,
+                });
 
-            if (invoice.status === 'PAID') {
-                const email = invoice.payerEmail;
-                let membershipType;
-                let limit;
+                if (invoice.status === 'PAID') {
+                    const email = invoice.payerEmail;
+                    let membershipType;
+                    let limit;
 
-                if (invoice.amount === 9000) {
-                    membershipType = 'Basic';
-                    limit = 3;
-                } else if (invoice.amount === 19000) {
-                    membershipType = 'Premium';
-                    limit = 10;
-                } else if (invoice.amount === 29000) {
-                    membershipType = 'Platinum';
-                    limit = 999999;
+                    if (invoice.amount === 9000) {
+                        membershipType = 'Basic';
+                        limit = 3;
+                    } else if (invoice.amount === 19000) {
+                        membershipType = 'Premium';
+                        limit = 10;
+                    } else if (invoice.amount === 29000) {
+                        membershipType = 'Platinum';
+                        limit = 999999;
+                    }
+
+                    await userService.updateUserMembership(email, membershipType);
+                    await userService.createInitialUserDailyLimit(email, limit);
+
+                    res.status(200).json({ message: 'Success' });
+                } else {
+                    res.status(400).json({ message: 'Failed' });
                 }
-
-                await userService.updateUserMembership(email, membershipType);
-                await userService.createInitialUserDailyLimit(email, limit);
-
-                res.status(200).json({ message: 'Success' });
-            } else {
-                res.status(400).json({ message: 'Failed' });
-            }
+            })
         } catch (error) {
             res.status(500).json({ message: error.message });
         }

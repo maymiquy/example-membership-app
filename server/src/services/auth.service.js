@@ -36,7 +36,7 @@ const authService = {
             }
 
             const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-                expiresIn: 360000,
+                expiresIn: '15m',
             });
 
             return token;
@@ -69,7 +69,7 @@ const authService = {
             }
 
             const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-                expiresIn: 360000,
+                expiresIn: '15m',
             });
 
             return { user, token };
@@ -92,13 +92,13 @@ const authService = {
                 const user = await User.create(name, email, hashedPassword);
 
                 const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-                    expiresIn: 360000,
+                    expiresIn: '15m',
                 });
 
                 return { user, token };
             } else {
                 const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-                    expiresIn: 360000,
+                    expiresIn: '15m',
                 });
 
                 return { user, token };

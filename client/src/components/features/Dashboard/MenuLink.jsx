@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { logout } from "../../../services/auth.service";
 
 import { Ellipsis, LogOut } from "lucide-react";
@@ -15,8 +15,12 @@ import {
 
 import { cn } from "../../../lib/utils";
 import getMenu from "../../../lib/menu";
+import { toast } from "../../ui/use-toast";
+import { useUserContext } from "../../../hooks/useUserContext";
 
 const MenuLink = ({ isOpen }) => {
+ const { setUser } = useUserContext();
+ const navigate = useNavigate();
  const pathname = useLocation().pathname;
  const menuList = getMenu(pathname);
 
@@ -102,9 +106,17 @@ const MenuLink = ({ isOpen }) => {
          <TooltipTrigger asChild>
           <Button
            onClick={async () => {
-            localStorage.removeItem("authToken");
-            const res = await logout();
-            if (res.status === 200) window.location.reload();
+            try {
+             const res = await logout();
+             setUser(null);
+             if (res.status === 200) navigate("/");
+            } catch (error) {
+             throw new Error(error);
+            } finally {
+             toast({
+              title: `Logout Successfully`,
+             });
+            }
            }}
            variant="outline"
            className="w-full justify-center h-10 my-5 hover:outline hover:outline-1 hover:outline-red-500"

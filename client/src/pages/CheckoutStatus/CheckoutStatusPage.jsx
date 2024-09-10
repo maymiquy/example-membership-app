@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { postSuccessCheckout } from "../../services/membership.service";
 import CheckoutStatus from "../../components/common/CheckoutStatus";
 import { getCookie } from "../../utils/getCookie";
+import cookies from "../../utils/cookies";
+
 
 const CheckoutStatusPage = () => {
  const [timeRemaining, setTimeRemaining] = useState(5);
  const [error, setError] = useState(false);
- const invoice_id = getCookie("invoice_id");
+ const invoice_id = cookies.get("invoice_id");
 
  useEffect(() => {
   const requestTimeout = setTimeout(() => {
@@ -21,10 +23,12 @@ const CheckoutStatusPage = () => {
    updatedSucceesSession();
   }, 700);
 
-  const redirectTimeout = setTimeout(() => {
+  const redirectTimeout = setTimeout(async () => {
    if (error) {
+    await cookies.remove("invoice_id");
     return (window.location.href = "/");
    } else {
+    await cookies.remove("invoice_id");
     return (window.location.href = "/dashboard");
    }
   }, 5000);

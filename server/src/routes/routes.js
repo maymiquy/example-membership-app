@@ -51,7 +51,7 @@ router.post(
         }
     }
 );
-router.post('/logout', authController.logout);
+router.delete('/logout', authController.logout);
 router.post('/oauth/google', authController.googleOAuth);
 router.post('/oauth/fb', authController.facebookOAuth);
 
