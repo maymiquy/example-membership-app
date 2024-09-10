@@ -33,6 +33,7 @@ const GoogleLogin = () => {
     });
    } finally {
     setLoading(false);
+    window.location.replace("/dashboard");
    }
   },
   onError: (error) => {

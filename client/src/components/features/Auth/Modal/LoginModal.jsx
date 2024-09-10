@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { regularLogin, storeToken } from "../../../../services/auth.service";
 import { useToast } from "../../../ui/use-toast";
 import Spinner from "../../../common/Spinner";
+import cookies from "../../../../utils/cookies";
 
 const LoginModal = () => {
  const [loading, setLoading] = useState(false);
@@ -30,21 +31,11 @@ const LoginModal = () => {
 
  const handleLogin = async () => {
   try {
-   const response = await regularLogin(formLogin.email, formLogin.password);
-   const { token } = response.data;
-   localStorage.setItem("authToken", token);
+   const message = await regularLogin(formLogin.email, formLogin.password);
+   const token = await cookies.get("authcookie");
    if (token) storeToken(token);
-
    setLoading(false);
    setIsOpen(false);
-
-   toast({
-    title: "Login Successful",
-   });
-
-   setTimeout(() => {
-    window.location.reload();
-   }, 1500);
 
    setFormLogin({
     email: "",
@@ -53,6 +44,9 @@ const LoginModal = () => {
    setError({
     email: "",
     password: "",
+   });
+   toast({
+    title: `${message}`,
    });
   } catch (error) {
    console.error("Login failed:", error);
@@ -77,6 +71,8 @@ const LoginModal = () => {
      email: messageError.errors[0].msg,
      password: "",
     });
+  } finally {
+   window.location.replace("/dashboard");
   }
  };
 
@@ -144,7 +140,10 @@ const LoginModal = () => {
       disabled={loading}
       loading={loading}
       variant="default"
-      onClick={handleLogin}
+      onClick={() => {
+       setLoading(true);
+       handleLogin();
+      }}
      >
       {loading ? <Spinner size="small" /> : "Login"}
      </Button>

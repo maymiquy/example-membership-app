@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
         });
 
         res.status(200).json({
-            message: 'Login successful',
+            message: 'Login successfully',
             token: token
         });
     } catch (error) {
@@ -47,7 +47,7 @@ exports.logout = async (req, res) => {
                     secure: false,
                     maxAge: new Date(0),
                 });
-                res.status(200).json({ message: 'Logout successful' });
+                res.status(200).json({ message: 'Logout successfully' });
             } else {
                 res.status(400).json({ message: 'Bad request' })
             }
@@ -69,7 +69,7 @@ exports.googleOAuth = async (req, res) => {
         });
 
         res.status(200).json({
-            message: 'Google OAuth successful',
+            message: 'Login Google Successfully',
             user: {
                 name: user.name,
                 email: user.email
@@ -93,7 +93,7 @@ exports.facebookOAuth = async (req, res) => {
         });
 
         res.status(200).json({
-            message: 'Facebook OAuth successful',
+            message: 'Login Facebook Successfully',
             user: {
                 name: user.name,
                 email: user.email
