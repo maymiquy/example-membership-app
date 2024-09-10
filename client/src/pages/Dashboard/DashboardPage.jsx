@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import Spinner from "../../components/common/Spinner";
 import SectionSlider from "../../components/features/Dashboard/Section/SectionSlider";
@@ -10,23 +10,45 @@ const DashboardPage = (props) => {
  const [video, setVideo] = React.useState([]);
  const [loading, setLoading] = React.useState(true);
 
- React.useEffect(() => {
-  (async () => {
-   try {
-    const { data } = await fetchContents();
-    setArticle(data.articles);
-    setVideo(data.videos);
-   } catch (error) {
-    setArticle([]);
-    setVideo([]);
-    throw new Error(error.message);
-   } finally {
-    setTimeout(() => {
-     setLoading(false);
-    }, 700);
-   }
-  })();
+ const fetchData = useCallback(async () => {
+  try {
+   const { data } = await fetchContents();
+   setArticle(data.articles);
+   setVideo(data.videos);
+  } catch (error) {
+   setArticle([]);
+   setVideo([]);
+   throw new Error(error.message);
+  } finally {
+   setLoading(false);
+  }
  }, []);
+
+ React.useEffect(() => {
+  fetchData();
+ }, [fetchData]);
+
+ const ArticleSlider = useMemo(
+  () => (
+   <SectionSlider
+    title="Article"
+    icon={<Newspaper className="w-8 h-8 text-gray-700" />}
+    data={article}
+   />
+  ),
+  [article],
+ );
+
+ const VideoSlider = useMemo(
+  () => (
+   <SectionSlider
+    title="Video"
+    icon={<SquarePlay className="w-8 h-8 text-gray-700" />}
+    data={video}
+   />
+  ),
+  [video],
+ );
 
  return (
   <DashboardLayout user={props.user}>
@@ -34,17 +56,8 @@ const DashboardPage = (props) => {
     <Spinner size="large" />
    ) : (
     <>
-     <SectionSlider
-      ider
-      title="Article"
-      icon={<Newspaper className="w-8 h-8 text-gray-700" />}
-      data={article}
-     />
-     <SectionSlider
-      title="Video"
-      icon={<SquarePlay className="w-8 h-8 text-gray-700" />}
-      data={video}
-     />
+     {ArticleSlider}
+     {VideoSlider}
     </>
    )}
   </DashboardLayout>
