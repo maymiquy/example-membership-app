@@ -73,7 +73,7 @@ const Pricing = (props) => {
     }).format(item.price / 1);
 
     return (
-     <Card key={index}>
+     <Card className="border rounded-xl min-w-72" key={index}>
       <CardHeader>
        <CardTitle className="text-center text-xl md:text-3xl font-semibold">
         {membershipName}
@@ -98,6 +98,7 @@ const Pricing = (props) => {
       </CardContent>
       <CardFooter className="relative bottom-0 px-6 my-4">
        <Button
+        loading={props.loading}
         className="w-full font-semibold text-md md:text-md"
         onClick={() => props.onClick(item.id)}
        >

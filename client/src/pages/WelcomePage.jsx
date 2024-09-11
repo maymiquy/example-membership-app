@@ -18,6 +18,7 @@ const WelcomePage = (props) => {
  const navigate = useNavigate();
  const [membership, setMembership] = useState([]);
  const [loading, setLoading] = useState(true);
+ const [isProcessing, setIsProcessing] = useState(false);
 
  useEffect(() => {
   (async () => {
@@ -41,15 +42,19 @@ const WelcomePage = (props) => {
 
  const handleSubscription = async (priceId) => {
   try {
+   setIsProcessing(true);
    const res = await postSubscription(priceId);
 
-   cookies.set("invoice_id", token, {
+   cookies.set("invoice_id", res.id, {
     expires: new Date(new Date().getTime() + 15 * 60 * 1000),
     path: "/",
    });
+   setIsProcessing(false);
    window.location.assign(res.invoiceUrl);
   } catch (error) {
+   setIsProcessing(true);
    cookies.remove("invoice_id");
+   setIsProcessing(false);
    throw new Error(error.message);
   }
  };
@@ -72,6 +77,7 @@ const WelcomePage = (props) => {
      className={`${loading ? "hidden" : ""}`}
      membership={membership}
      onClick={handleSubscription}
+     loading={isProcessing}
     />
    )}
   </GuestLayout>
