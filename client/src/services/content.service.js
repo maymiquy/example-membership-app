@@ -1,8 +1,11 @@
 import axios from "axios";
+import { c } from "../utils/constant";
+
+const BASE_URL = c.PUBLIC_BASE_URL;
 
 const fetchContents = async () => {
     try {
-        const response = await axios.get("https://example-membership.vercel.app/api/contents");
+        const response = await axios.get(`${BASE_URL}/contents`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);
@@ -11,7 +14,7 @@ const fetchContents = async () => {
 
 const fetchSingleArticle = async (id) => {
     try {
-        const response = await axios.get(`https://example-membership.vercel.app/api/contents/article/${id}`);
+        const response = await axios.get(`${BASE_URL}/contents/article/${id}`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);
@@ -20,7 +23,7 @@ const fetchSingleArticle = async (id) => {
 
 const fetchSingleVideo = async (id) => {
     try {
-        const response = await axios.get(`https://example-membership.vercel.app/api/contents/video/${id}`);
+        const response = await axios.get(`${BASE_URL}/contents/video/${id}`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);

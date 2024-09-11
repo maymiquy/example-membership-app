@@ -1,5 +1,8 @@
 import axios from "axios";
 import cookies from "../utils/cookies";
+import { c } from "../utils/constant";
+
+const BASE_URL = c.PUBLIC_BASE_URL;
 
 const storeToken = async (token) => {
     try {
@@ -10,7 +13,7 @@ const storeToken = async (token) => {
 };
 
 const regularLogin = async (email, password) => {
-    const res = await axios.post("https://example-membership.vercel.app/api/login", {
+    const res = await axios.post(`${BASE_URL}/login`, {
         email,
         password,
     });
@@ -22,7 +25,7 @@ const regularLogin = async (email, password) => {
 }
 
 const regularRegister = async (name, email, password) => {
-    const data = await axios.post("https://example-membership.vercel.app/api/register", {
+    const data = await axios.post(`${BASE_URL}/register`, {
         name,
         email,
         password,
@@ -33,7 +36,7 @@ const regularRegister = async (name, email, password) => {
 
 const oauthFacebook = async (accessToken) => {
     try {
-        const res = await axios.post("https://example-membership.vercel.app/api/oauth/fb", {
+        const res = await axios.post(`${BASE_URL}/oauth/fb`, {
             accessToken,
         });
 
@@ -48,7 +51,7 @@ const oauthFacebook = async (accessToken) => {
 
 const oauthGoogle = async (accessToken) => {
     try {
-        const res = await axios.post("https://example-membership.vercel.app/api/oauth/google", {
+        const res = await axios.post(`${BASE_URL}/oauth/google`, {
             accessToken,
         });
         const { token, message } = res.data;
@@ -62,7 +65,7 @@ const oauthGoogle = async (accessToken) => {
 
 const logout = async () => {
     try {
-        const res = await axios.delete("https://example-membership.vercel.app/api/logout");
+        const res = await axios.delete(`${BASE_URL}/logout`);
         cookies.remove('authcookie');
         return res;
     } catch (error) {
