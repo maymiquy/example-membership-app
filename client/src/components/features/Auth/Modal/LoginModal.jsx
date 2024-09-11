@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
  Dialog,
  DialogContent,
@@ -45,9 +45,15 @@ const LoginModal = () => {
     email: "",
     password: "",
    });
-   toast({
-    title: `${message}`,
-   });
+
+   const popUpInterval = setInterval(() => {
+    toast({
+     title: `${message}`,
+    });
+    clearInterval(popUpInterval);
+   }, 3000);
+
+   window.location.assign("/dashboard");
   } catch (error) {
    console.error("Login failed:", error);
    setIsOpen(true);
@@ -71,22 +77,23 @@ const LoginModal = () => {
      email: messageError.errors[0].msg,
      password: "",
     });
-  } finally {
-   window.location.replace("/dashboard");
   }
  };
 
- const handleInputChange = async (e) => {
-  setFormLogin({
-   ...formLogin,
-   [e.target.id]: e.target.value,
-  });
+ const handleInputChange = useCallback(
+  async (e) => {
+   setFormLogin({
+    ...formLogin,
+    [e.target.id]: e.target.value,
+   });
 
-  setError({
-   ...error,
-   [e.target.id]: "",
-  });
- };
+   setError({
+    ...error,
+    [e.target.id]: "",
+   });
+  },
+  [formLogin, error],
+ );
 
  const handleKeyDown = (e) => {
   if (e.key === "Enter" && !loading) {
