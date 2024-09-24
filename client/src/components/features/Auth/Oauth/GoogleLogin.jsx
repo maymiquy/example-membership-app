@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../../../ui/button";
 import { GrGoogle } from "react-icons/gr";
 import { useGoogleLogin } from "@react-oauth/google";
-import { oauthGoogle, storeToken } from "../../../../services/auth.service";
+import { oauthGoogle } from "../../../../services/auth.service";
 import { toast } from "../../../ui/use-toast";
 import { useUserContext } from "../../../../hooks/useUserContext";
 import Spinner from "../../../common/Spinner";
@@ -14,9 +14,7 @@ const GoogleLogin = () => {
  const handleGoogleLogin = useGoogleLogin({
   onSuccess: async (tokenResponse) => {
    try {
-    const { user, token } = await oauthGoogle(tokenResponse.access_token);
-    localStorage.setItem("authToken", token);
-    if (token) storeToken(token);
+    const { user } = await oauthGoogle(tokenResponse.access_token);
     setUser(user);
 
     setLoading(false);

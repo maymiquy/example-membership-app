@@ -11,10 +11,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { regularLogin, storeToken } from "../../../../services/auth.service";
+import { regularLogin } from "../../../../services/auth.service";
 import { useToast } from "../../../ui/use-toast";
 import Spinner from "../../../common/Spinner";
-import cookies from "../../../../utils/cookies";
 
 const LoginModal = () => {
  const [loading, setLoading] = useState(false);
@@ -32,8 +31,6 @@ const LoginModal = () => {
  const handleLogin = async () => {
   try {
    const message = await regularLogin(formLogin.email, formLogin.password);
-   const token = await cookies.get("authcookie");
-   if (token) storeToken(token);
    setLoading(false);
    setIsOpen(false);
 
@@ -46,14 +43,9 @@ const LoginModal = () => {
     password: "",
    });
 
-   const popUpInterval = setInterval(() => {
-    toast({
-     title: `${message}`,
-    });
-    clearInterval(popUpInterval);
-   }, 3000);
-
-   window.location.assign("/dashboard");
+   toast({
+    title: `${message}`,
+   });
   } catch (error) {
    console.error("Login failed:", error);
    setIsOpen(true);
@@ -77,6 +69,8 @@ const LoginModal = () => {
      email: messageError.errors[0].msg,
      password: "",
     });
+  } finally {
+   window.location.replace("/dashboard");
   }
  };
 

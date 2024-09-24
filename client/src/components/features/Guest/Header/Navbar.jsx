@@ -27,9 +27,9 @@ const Navbar = (props) => {
         className="rounded-full w-8 h-8 bg-background"
         asChild
        >
-        <Link href="https://github.com/maymiquy">
+        <a href="https://github.com/maymiquy">
          <GitHubLogoIcon className="h-[1.2rem] w-[1.2rem]" />
-        </Link>
+        </a>
        </Button>
       ) : (
        <UserAvatar user={props.user} />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
-import { oauthFacebook, storeToken } from "../../../../services/auth.service";
+import { oauthFacebook } from "../../../../services/auth.service";
 import { Button } from "../../../ui/button";
 import { SiFacebook } from "react-icons/si";
 import { toast } from "../../../ui/use-toast";
@@ -16,9 +16,7 @@ const FbLogin = () => {
    setIsLoading(true);
    const { accessToken } = response;
    const { data } = await oauthFacebook(accessToken);
-   const { user, token } = data;
-
-   if (token) storeToken(token);
+   const { user } = data;
    setUser(user);
 
    toast({

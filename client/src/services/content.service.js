@@ -1,11 +1,9 @@
-import axios from "axios";
-import { c } from "../utils/constant";
 
-const BASE_URL = c.PUBLIC_BASE_URL;
+import api from "../config/api";
 
 const fetchContents = async () => {
     try {
-        const response = await axios.get(`${BASE_URL}/contents`);
+        const response = await api.get(`/contents`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);
@@ -14,7 +12,7 @@ const fetchContents = async () => {
 
 const fetchSingleArticle = async (id) => {
     try {
-        const response = await axios.get(`${BASE_URL}/contents/article/${id}`);
+        const response = await api.get(`/contents/article/${id}`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);
@@ -23,7 +21,7 @@ const fetchSingleArticle = async (id) => {
 
 const fetchSingleVideo = async (id) => {
     try {
-        const response = await axios.get(`${BASE_URL}/contents/video/${id}`);
+        const response = await api.get(`/contents/video/${id}`);
         return response.data;
     } catch (error) {
         throw new Error(error.message);

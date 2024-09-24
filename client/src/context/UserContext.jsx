@@ -1,7 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { fetchMe } from "../services/user.service";
-import { storeToken } from "../services/auth.service";
 import cookies from "../utils/cookies";
 
 export const UserContext = createContext(null);
@@ -10,19 +8,17 @@ export const UserProvider = ({ children }) => {
  const [user, setUser] = useState(null);
  const [loading, setLoading] = useState(true);
  const [error, setError] = useState(null);
- const navigate = useNavigate();
-
- const token = cookies.get("authcookie");
-
- if (token) storeToken(token);
+ const token = cookies.get("AUTH-TOKEN");
 
  useEffect(() => {
   (async () => {
    try {
-    const user = await fetchMe();
-    setUser(user);
-    setLoading(false);
-    setError(null);
+    if (token) {
+     const user = await fetchMe();
+     setUser(user);
+     setLoading(false);
+     setError(null);
+    }
    } catch (error) {
     setUser(null);
     setLoading(false);

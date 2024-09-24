@@ -12,7 +12,7 @@ const membershipService = require('./services/membership.service');
 
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://example-membership.vercel.app'],
+    origin: [`${process.env.ORIGIN_LOCAL}`, `${process.env.ORIGIN_PUBLIC}`],
     credentials: true,
     optionsSuccessStatus: 200
 }));
