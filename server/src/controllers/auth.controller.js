@@ -22,7 +22,7 @@ exports.login = async (req, res) => {
         const { email, password } = req.body;
         const token = await authService.login(email, password);
 
-        res.cookie('authcookie', token, {
+        res.cookie('AUHT-TOKEN', token, {
             httpOnly: true,
             secure: false,
             maxAge: 30 * 60 * 1000,
@@ -42,7 +42,7 @@ exports.logout = async (req, res) => {
         await authGuard(req, res, async () => {
             const { email } = req.user;
             if (email) {
-                res.clearCookie('authcookie', {
+                res.clearCookie('AUHT-TOKEN', {
                     httpOnly: true,
                     secure: false,
                     maxAge: new Date(0),
@@ -62,7 +62,7 @@ exports.googleOAuth = async (req, res) => {
         const { accessToken } = req.body;
         const { user, token } = await authService.googleOAuth(accessToken);
 
-        res.cookie('authcookie', token, {
+        res.cookie('AUHT-TOKEN', token, {
             httpOnly: true,
             secure: false,
             maxAge: 30 * 60 * 1000,
@@ -86,7 +86,7 @@ exports.facebookOAuth = async (req, res) => {
         const { accessToken } = req.body;
         const { user, token } = await authService.facebookOAuth(accessToken);
 
-        res.cookie('authcookie', token, {
+        res.cookie('AUHT-TOKEN', token, {
             httpOnly: true,
             secure: false,
             maxAge: 30 * 60 * 1000,
