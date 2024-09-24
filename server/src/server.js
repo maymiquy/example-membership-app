@@ -11,7 +11,11 @@ const { schedule } = require('node-cron');
 const membershipService = require('./services/membership.service');
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://example-membership.vercel.app'],
+    credentials: true,
+    optionsSuccessStatus: 200
+}));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(morgan('dev'));
 
