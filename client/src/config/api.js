@@ -6,7 +6,6 @@ const BASE_URL = c.PUBLIC_BASE_URL;
 
 const api = axios.create({
     baseURL: BASE_URL,
-    withCredentials: true
 });
 
 api.interceptors.request.use(config => {

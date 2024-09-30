@@ -12,8 +12,7 @@ const membershipService = require('./services/membership.service');
 
 app.use(express.json());
 app.use(cors({
-    origin: [`${process.env.ORIGIN_LOCAL}`, `${process.env.ORIGIN_PUBLIC}`],
-    credentials: true,
+    origin: [`${process.env.ORIGIN_PUBLIC}`, `${process.env.ORIGIN_LOCAL}`],
     optionsSuccessStatus: 200
 }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
